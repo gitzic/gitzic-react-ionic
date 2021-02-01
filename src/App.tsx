@@ -32,37 +32,40 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import useMidi from './hooks/useMidi';
+
+import { GitZicProvider, useGitZic } from './hooks/useGitZic';
 
 const App: React.FC = () => {
-    const { midi } = useMidi();
-    console.log('Midi', midi);
+    const { midi } = useGitZic();
+    // console.log('Midi in App', midi);
     return (
-        <IonApp>
-            <IonReactRouter>
-                <IonTabs>
-                    <IonRouterOutlet>
-                        <Route path="/tab1" component={Tab1} exact={true} />
-                        <Route path="/log" component={Tab2} exact={true} />
-                        <Route
-                            path="/"
-                            render={() => <Redirect to="/tab1" />}
-                            exact={true}
-                        />
-                    </IonRouterOutlet>
-                    <IonTabBar slot="bottom">
-                        <IonTabButton tab="tab1" href="/tab1">
-                            <IonIcon icon={triangle} />
-                            <IonLabel>Tab 1</IonLabel>
-                        </IonTabButton>
-                        <IonTabButton tab="tab2" href="/log">
-                            <IonIcon icon={bugOutline} />
-                            <IonLabel>Log</IonLabel>
-                        </IonTabButton>
-                    </IonTabBar>
-                </IonTabs>
-            </IonReactRouter>
-        </IonApp>
+        <GitZicProvider>
+            <IonApp>
+                <IonReactRouter>
+                    <IonTabs>
+                        <IonRouterOutlet>
+                            <Route path="/tab1" component={Tab1} exact={true} />
+                            <Route path="/log" component={Tab2} exact={true} />
+                            <Route
+                                path="/"
+                                render={() => <Redirect to="/tab1" />}
+                                exact={true}
+                            />
+                        </IonRouterOutlet>
+                        <IonTabBar slot="bottom">
+                            <IonTabButton tab="tab1" href="/tab1">
+                                <IonIcon icon={triangle} />
+                                <IonLabel>Tab 1</IonLabel>
+                            </IonTabButton>
+                            <IonTabButton tab="tab2" href="/log">
+                                <IonIcon icon={bugOutline} />
+                                <IonLabel>Log</IonLabel>
+                            </IonTabButton>
+                        </IonTabBar>
+                    </IonTabs>
+                </IonReactRouter>
+            </IonApp>
+        </GitZicProvider>
     );
 };
 
