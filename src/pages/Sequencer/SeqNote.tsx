@@ -32,7 +32,7 @@ export const SeqNote = ({ beatCount, stepPerbeat, midi, steps }: Props) => {
                             className={`step ${step && 'active'}`}
                             key={`step-${key}`}
                             style={{
-                                width: 30 * duration + 2 * (duration - 1),
+                                width: 30 * duration + 4 * (duration - 1),
                                 backgroundColor: step
                                     ? '#F88'
                                     : Math.floor(key / stepPerbeat) % 2 === 0
