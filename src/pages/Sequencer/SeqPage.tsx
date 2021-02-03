@@ -1,5 +1,7 @@
 import React from 'react';
-import { IonContent, IonPage } from '@ionic/react';
+import { IonButton, IonContent, IonIcon, IonPage } from '@ionic/react';
+import { add } from 'ionicons/icons';
+
 import { useGitZic } from '../../hooks/useGitZic';
 import { evNumVal } from '../../utils/event';
 import { notes } from '../../hooks/GitZic/note';
@@ -51,21 +53,30 @@ export const SeqPage: React.FC = () => {
                     `}</style>
                     <div className="seq">
                         <div className="row">
-                            <select defaultValue={60}>
-                                {notes.map((note, key) => (
-                                    <option key={`note-${key}`} value={key}>
-                                        {note}
-                                    </option>
-                                ))}
-                            </select>
-                            <div>
+                            <div className="steps-note">
+                                <select defaultValue={60}>
+                                    {notes.map((note, key) => (
+                                        <option key={`note-${key}`} value={key}>
+                                            {note}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="steps">
                                 {[...new Array(beatCount * stepPerbeat)].map(
                                     (_, key) => (
-                                        <div className="step"></div>
+                                        <div
+                                            className="step"
+                                            key={`step-${key}`}
+                                        ></div>
                                     ),
                                 )}
                             </div>
                         </div>
+                        <IonButton size="small" fill="outline">
+                            <IonIcon slot="start" icon={add} />
+                            Add
+                        </IonButton>
                     </div>
                 </div>
             </IonContent>

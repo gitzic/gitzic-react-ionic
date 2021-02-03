@@ -14,6 +14,7 @@
     },
     "scripts": {
         "serve": "ionic serve",
+        "lab": "ionic serve --lab",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
@@ -42,6 +43,7 @@
     },
     "devDependencies": {
         "@ionic/cli": "^6.12.4",
+        "@ionic/lab": "3.2.10",
         "@types/webmidi": "^2.0.4"
     },
     "eslintConfig": {

@@ -40,8 +40,9 @@ function onMIDIMessage({ data }: WebMidi.MIDIMessageEvent) {
 export function init() {
     if (!navigator.requestMIDIAccess) {
         onMIDIError(new Error('This browser does not support MIDIAccess'));
+    } else {
+        navigator
+            .requestMIDIAccess({ sysex: false })
+            .then(onMIDISuccess, onMIDIError);
     }
-    navigator
-        .requestMIDIAccess({ sysex: false })
-        .then(onMIDISuccess, onMIDIError);
 }

@@ -1,5 +1,7 @@
 .seq {
-margin: 10px 0;
+    margin: 10px 0;
+    padding-bottom: 10px;
+    overflow-x: auto;
 }
 
 .seq .row {
@@ -8,20 +10,26 @@ margin: 10px 0;
     height: 36px;
 }
 
-.seq select {
-    top: -10px;
-    position: relative;
+.seq .steps-note {
+    position: fixed;
+    background-color: #fff;
+    margin-top: 2px;
+}
+
+.seq .steps {
+    margin-left: 70px;
 }
 
 .seq div {
     height: 30px;
     display: inline-block;
+    white-space: nowrap;
 }
 .seq .step {
     background-color: #888;
     /* border-left: 3px solid #666; */
     border-radius: 10px;
     width: 30px;
-    margin: 2px;
     cursor: pointer;
+    margin: 2px;
 }
