@@ -22,7 +22,7 @@
     margin-left: 40px;
 }
 
-.seq div {
+.seq .note div {
     height: 30px;
     display: inline-block;
     white-space: nowrap;
