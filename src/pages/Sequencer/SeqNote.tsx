@@ -15,8 +15,32 @@ export const SeqNote = ({ beatCount, stepPerbeat, midi, steps }: Props) => {
             <div className="note-name">{noteMidi[midi]}</div>
             <div className="steps">
                 {[...new Array(beatCount * stepPerbeat)].map((_, key) => {
-                    const step = steps.find(({ time }) => time * stepPerbeat === key);
-                    return <div className={`step ${step && 'active'}`} key={`step-${key}`}></div>;
+                    const slide = steps.find(
+                        ({ time, duration }) =>
+                            key > time * stepPerbeat &&
+                            key < (time + duration) * stepPerbeat,
+                    );
+                    if (slide) {
+                        return;
+                    }
+                    const step = steps.find(
+                        ({ time }) => time * stepPerbeat === key,
+                    );
+                    const duration = step ? step.duration * stepPerbeat : 1;
+                    return (
+                        <div
+                            className={`step ${step && 'active'}`}
+                            key={`step-${key}`}
+                            style={{
+                                width: 30 * duration + 2 * (duration - 1),
+                                backgroundColor: step
+                                    ? '#F88'
+                                    : Math.floor(key / stepPerbeat) % 2 === 0
+                                    ? '#AAA'
+                                    : undefined,
+                            }}
+                        ></div>
+                    );
                 })}
             </div>
         </div>

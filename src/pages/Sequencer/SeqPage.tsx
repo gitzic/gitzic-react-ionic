@@ -23,11 +23,6 @@ export const SeqPage: React.FC = () => {
                         setStepPerBeat={setStepPerBeat}
                         stepPerbeat={stepPerbeat}
                     />
-                    <style>{`
-                    .seq .step:nth-child(${stepPerbeat}n) {
-                        margin-right: 10px;
-                    }
-                    `}</style>
                     <div className="seq">
                         {availableNotes.map((midi) => (
                             <SeqNote
