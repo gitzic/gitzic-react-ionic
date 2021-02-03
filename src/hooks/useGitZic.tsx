@@ -3,7 +3,12 @@ import { init, addListenerMidiSuccess, addListenerMidiError } from './GitZic';
 
 // inspired by https://github.com/matthewshirley/react-midi-hook
 
-export const GitZicContext = createContext<any>({});
+interface Context {
+    midi?: WebMidi.MIDIAccess;
+    error?: any;
+}
+
+export const GitZicContext = createContext<Context>({});
 
 export function useGitZic() {
     return useContext(GitZicContext);
