@@ -4,20 +4,22 @@
     overflow-x: auto;
 }
 
-.seq .row {
+.seq .note {
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
     height: 36px;
 }
 
-.seq .steps-note {
+.seq .note-name {
     position: fixed;
     background-color: #fff;
     margin-top: 2px;
+    padding-top: 5px;
+    width: 35px;
 }
 
 .seq .steps {
-    margin-left: 70px;
+    margin-left: 40px;
 }
 
 .seq div {

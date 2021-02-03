@@ -1,4 +1,4 @@
-export const notes = [
+export const noteMidi = [
     'C-1',
     'C#-1',
     'D-1',
