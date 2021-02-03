@@ -2,6 +2,9 @@ import React from 'react';
 import { IonContent, IonPage } from '@ionic/react';
 import { useGitZic } from '../../hooks/useGitZic';
 import { evNumVal } from '../../utils/event';
+import { notes } from '../../hooks/GitZic/note';
+
+import './Seq.css';
 
 export const SeqPage: React.FC = () => {
     const { midi } = useGitZic();
@@ -40,6 +43,29 @@ export const SeqPage: React.FC = () => {
                                 ),
                             )}
                         </select>
+                    </div>
+                    <style>{`
+                    .seq .step:nth-child(${stepPerbeat}n) {
+                        margin-right: 10px;
+                    }
+                    `}</style>
+                    <div className="seq">
+                        <div className="row">
+                            <select defaultValue={60}>
+                                {notes.map((note, key) => (
+                                    <option key={`note-${key}`} value={key}>
+                                        {note}
+                                    </option>
+                                ))}
+                            </select>
+                            <div>
+                                {[...new Array(beatCount * stepPerbeat)].map(
+                                    (_, key) => (
+                                        <div className="step"></div>
+                                    ),
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </IonContent>

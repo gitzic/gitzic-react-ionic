@@ -1,0 +1,27 @@
+.seq {
+margin: 10px 0;
+}
+
+.seq .row {
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    height: 36px;
+}
+
+.seq select {
+    top: -10px;
+    position: relative;
+}
+
+.seq div {
+    height: 30px;
+    display: inline-block;
+}
+.seq .step {
+    background-color: #888;
+    /* border-left: 3px solid #666; */
+    border-radius: 10px;
+    width: 30px;
+    margin: 2px;
+    cursor: pointer;
+}
