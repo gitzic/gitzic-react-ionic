@@ -10,7 +10,6 @@ import './Seq.css';
 
 export const SeqPage: React.FC = () => {
     const { midi } = useGitZic();
-    // console.log('Midi in tab1', midi);
     const [beatCount, setBeatCount] = React.useState(4);
     const [stepPerbeat, setStepPerBeat] = React.useState(4);
     return (
@@ -31,9 +30,10 @@ export const SeqPage: React.FC = () => {
                             defaultValue={stepPerbeat}
                             onChange={evNumVal(setStepPerBeat)}
                         >
-                            {[...new Array(8)].map((_, key) => (
-                                <option key={`step-${key}`}>{key + 1}</option>
-                            ))}
+                            <option>1</option>
+                            <option>2</option>
+                            <option>4</option>
+                            <option>8</option>
                         </select>
                         steps. Output:
                         <select>
@@ -73,6 +73,7 @@ export const SeqPage: React.FC = () => {
                                 )}
                             </div>
                         </div>
+                        <br />
                         <IonButton size="small" fill="outline">
                             <IonIcon slot="start" icon={add} />
                             Add
