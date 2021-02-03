@@ -1,11 +1,13 @@
 export interface SequenceData {
     beatCount: number;
     availableNotes: number[];
-    notes: {
-        midi: number;
-        duration: number;
-        time: number;
-    }[];
+    notes: Note[];
+}
+
+export interface Note {
+    midi: number;
+    duration: number;
+    time: number;
 }
 
 export function setBeatCount(count: number) {}

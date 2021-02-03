@@ -3,17 +3,16 @@ import { IonButton, IonContent, IonIcon, IonPage } from '@ionic/react';
 import { add } from 'ionicons/icons';
 
 import { useGitZic } from '../../hooks/useGitZic';
-import { evNumVal } from '../../utils/event';
 import { noteMidi } from '../../hooks/GitZic/note';
 
 import './Seq.css';
-import { getNotes } from './utils';
+import { getSteps } from './utils';
 import { SeqOptions } from './SeqOptions';
 import { SeqNote } from './SeqNote';
 
 export const SeqPage: React.FC = () => {
     const {
-        sequence: { availableNotes, beatCount },
+        sequence: { availableNotes, beatCount, notes },
     } = useGitZic();
     const [stepPerbeat, setStepPerBeat] = React.useState(4);
     return (
@@ -35,6 +34,7 @@ export const SeqPage: React.FC = () => {
                                 midi={midi}
                                 stepPerbeat={stepPerbeat}
                                 beatCount={beatCount}
+                                steps={getSteps(midi, notes)}
                             />
                         ))}
                         <br />

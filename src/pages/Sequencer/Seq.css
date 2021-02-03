@@ -35,3 +35,7 @@
     cursor: pointer;
     margin: 2px;
 }
+
+.seq .step.active {
+    background-color: #F88;
+}
