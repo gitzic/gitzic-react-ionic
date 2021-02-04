@@ -12,12 +12,12 @@ export const SeqTime = ({ beatCount, stepPerbeat, currentTime }: Props) => {
             <div className="note-name"></div>
             <div className="steps">
                 {[...new Array(beatCount * stepPerbeat)].map((_, key) => {
-                    // console.log('yo', currentTime, key / stepPerbeat);
+                    const isActive =
+                        currentTime >= key / stepPerbeat &&
+                        currentTime < (key + 1) / stepPerbeat;
                     return (
                         <div
-                            className={`step ${
-                                currentTime === key / stepPerbeat && 'active'
-                            }`}
+                            className={`step ${isActive && 'active'}`}
                             key={`time-${key}`}
                         ></div>
                     );

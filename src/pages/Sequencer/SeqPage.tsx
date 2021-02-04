@@ -1,9 +1,7 @@
 import React from 'react';
-import { IonButton, IonContent, IonIcon, IonPage } from '@ionic/react';
-import { add } from 'ionicons/icons';
+import { IonContent, IonPage } from '@ionic/react';
 
 import { useGitZic } from '../../hooks/useGitZic';
-import { noteMidi } from '../../hooks/GitZic/note';
 
 import './Seq.css';
 import { getSteps } from './utils';
