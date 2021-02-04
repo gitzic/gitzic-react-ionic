@@ -4,6 +4,13 @@ import { useGitZic } from '../../hooks/useGitZic';
 import { evNumVal } from '../../utils/event';
 
 import { setBeatCount } from '../../hooks/GitZic/sequence';
+import { MAX_STEPS_PER_BEAT } from '../../hooks/GitZic';
+
+const listStepsPerbeat = [1];
+for (let val = MAX_STEPS_PER_BEAT; val > 1; val = val / 2) {
+    listStepsPerbeat.push(val);
+}
+listStepsPerbeat.sort();
 
 interface Props {
     setStepPerBeat: React.Dispatch<React.SetStateAction<number>>;
@@ -12,6 +19,7 @@ interface Props {
 
 export const SeqOptions = ({ setStepPerBeat, stepPerbeat }: Props) => {
     const { midi, sequence } = useGitZic();
+
     return (
         <div>
             <select
@@ -27,10 +35,9 @@ export const SeqOptions = ({ setStepPerBeat, stepPerbeat }: Props) => {
                 defaultValue={stepPerbeat}
                 onChange={evNumVal(setStepPerBeat)}
             >
-                <option>1</option>
-                <option>2</option>
-                <option>4</option>
-                <option>8</option>
+                {listStepsPerbeat.map((val) => (
+                    <option key={`stepsPerBeat${val}`}>{val}</option>
+                ))}
             </select>
             steps. Output:
             <select>
