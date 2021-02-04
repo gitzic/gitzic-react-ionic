@@ -9,10 +9,11 @@ import './Seq.css';
 import { getSteps } from './utils';
 import { SeqOptions } from './SeqOptions';
 import { SeqNote } from './SeqNote';
+import { SeqAddNote } from './SeqAddNote';
 
 export const SeqPage: React.FC = () => {
     const {
-        sequence: { availableNotes, beatCount, notes },
+        sequence: { displayedNotes, beatCount, notes },
     } = useGitZic();
     const [stepPerbeat, setStepPerBeat] = React.useState(4);
     return (
@@ -24,7 +25,7 @@ export const SeqPage: React.FC = () => {
                         stepPerbeat={stepPerbeat}
                     />
                     <div className="seq">
-                        {availableNotes.map((midi) => (
+                        {displayedNotes.map((midi) => (
                             <SeqNote
                                 midi={midi}
                                 stepPerbeat={stepPerbeat}
@@ -33,17 +34,7 @@ export const SeqPage: React.FC = () => {
                             />
                         ))}
                         <br />
-                        <IonButton size="small" fill="outline">
-                            <IonIcon slot="start" icon={add} />
-                            Add
-                            <select defaultValue={60}>
-                                {noteMidi.map((note, key) => (
-                                    <option key={`note-${key}`} value={key}>
-                                        {note}
-                                    </option>
-                                ))}
-                            </select>
-                        </IonButton>
+                        <SeqAddNote excludeNotes={displayedNotes} />
                     </div>
                 </div>
             </IonContent>

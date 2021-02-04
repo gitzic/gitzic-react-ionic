@@ -27,17 +27,15 @@ export const SeqNote = ({ beatCount, stepPerbeat, midi, steps }: Props) => {
                         ({ time }) => time * stepPerbeat === key,
                     );
                     const duration = step ? step.duration * stepPerbeat : 1;
+                    const even = Math.floor(key / stepPerbeat) % 2 === 0;
                     return (
                         <div
-                            className={`step ${step && 'active'}`}
+                            className={`step ${step && 'active'} ${
+                                even && 'even'
+                            }`}
                             key={`step-${key}`}
                             style={{
                                 width: 30 * duration + 4 * (duration - 1),
-                                backgroundColor: step
-                                    ? '#F88'
-                                    : Math.floor(key / stepPerbeat) % 2 === 0
-                                    ? '#AAA'
-                                    : undefined,
                             }}
                         ></div>
                     );

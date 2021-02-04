@@ -35,6 +35,11 @@
     margin: 2px;
 }
 
-.seq .step.active {
-    background-color: #F88;
+.seq .step.even {
+    background-color: #aaa;
+}
+
+.seq .step.active,
+.seq .step.active.even {
+    background-color: #f88;
 }

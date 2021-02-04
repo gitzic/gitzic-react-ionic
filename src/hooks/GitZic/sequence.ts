@@ -1,6 +1,6 @@
 export interface SequenceData {
     beatCount: number;
-    availableNotes: number[];
+    displayedNotes: number[];
     notes: Note[];
 }
 
@@ -14,7 +14,7 @@ export function setBeatCount(count: number) {}
 
 export const sequenceData: SequenceData = {
     beatCount: 4,
-    availableNotes: [64, 62, 60, 58, 50],
+    displayedNotes: [64, 62, 60, 58, 50],
     notes: [
         {
             midi: 60,
