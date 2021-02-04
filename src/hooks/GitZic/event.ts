@@ -6,7 +6,7 @@ export enum eventKey {
     onMIDISuccess = 'onMIDISuccess',
     onMIDIError = 'onMIDIError',
     onBPMchange = 'onBPMchange',
-    onInterval = 'onInterval',
+    onSeqChange = 'onSeqChange',
 }
 
 // ToDo move listenner in an array

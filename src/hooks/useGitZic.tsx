@@ -6,7 +6,7 @@ import {
     Tempo,
     sequencer,
     addListenerBPMchange,
-    addListenerInterval,
+    addListenerSeqChange,
 } from './GitZic';
 import { sequenceData, SequenceData } from './GitZic/sequence';
 
@@ -17,13 +17,13 @@ interface Context {
     error?: any;
     sequence: SequenceData;
     tempo: Tempo;
-    time: number;
+    seq: SequenceData;
 }
 
 export const GitZicContext = createContext<Context>({
     sequence: sequenceData,
     tempo: sequencer.tempo,
-    time: 0,
+    seq: sequenceData,
 });
 
 export function useGitZic() {
@@ -34,13 +34,13 @@ export function GitZicProvider({ children }: React.PropsWithChildren<{}>) {
     const [midi, setMidi] = useState<WebMidi.MIDIAccess>();
     const [error, setError] = useState<any>(false);
     const [tempo, setTempo] = useState<Tempo>(sequencer.tempo);
-    const [time, setTime] = useState<number>(0);
+    const [seq, setSeq] = useState<SequenceData>(sequenceData);
 
     const provided = {
         midi,
         error,
         tempo,
-        time,
+        seq,
         sequence: sequenceData,
     };
 
@@ -48,7 +48,7 @@ export function GitZicProvider({ children }: React.PropsWithChildren<{}>) {
         addListenerMidiSuccess(setMidi);
         addListenerMidiError(setError);
         addListenerBPMchange(setTempo);
-        addListenerInterval(setTime);
+        addListenerSeqChange((seq) => { setSeq({...seq});  });
         init();
     }, []);
 

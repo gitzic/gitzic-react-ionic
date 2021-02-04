@@ -1,5 +1,5 @@
 import { event, eventKey } from './event';
-import { sequenceData } from './sequence';
+import { SequenceData, sequenceData } from './sequence';
 import { between } from './utils';
 
 export const MAX_STEPS_PER_BEAT = 8;
@@ -37,13 +37,13 @@ export function setBpm(newBpm: number) {
     event.emit(eventKey.onBPMchange, sequencer.tempo);
 }
 
-export function addListenerInterval(fn: (time: number) => void) {
-    event.addListener(eventKey.onInterval, fn);
+export function addListenerSeqChange(fn: (seq: SequenceData) => void) {
+    event.addListener(eventKey.onSeqChange, fn);
 }
 
 function loop() {
     const ms = 1 / MAX_STEPS_PER_BEAT;
     const newTime = sequenceData.currentTime + ms;
     sequenceData.currentTime = newTime >= sequenceData.beatCount ? 0 : newTime;
-    event.emit(eventKey.onInterval, sequenceData.currentTime);
+    event.emit(eventKey.onSeqChange, sequenceData);
 }

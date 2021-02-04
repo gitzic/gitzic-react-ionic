@@ -10,10 +10,11 @@ import { getSteps } from './utils';
 import { SeqOptions } from './SeqOptions';
 import { SeqNote } from './SeqNote';
 import { SeqAddNote } from './SeqAddNote';
+import { SeqTime } from './SeqTime';
 
 export const SeqPage: React.FC = () => {
     const {
-        sequence: { displayedNotes, beatCount, notes },
+        sequence: { displayedNotes, beatCount, notes, currentTime },
     } = useGitZic();
     const [stepPerbeat, setStepPerBeat] = React.useState(4);
     return (
@@ -34,6 +35,11 @@ export const SeqPage: React.FC = () => {
                                 steps={getSteps(midi, notes)}
                             />
                         ))}
+                        <SeqTime
+                            stepPerbeat={stepPerbeat}
+                            beatCount={beatCount}
+                            currentTime={currentTime}
+                        />
                         <br />
                         <SeqAddNote excludeNotes={displayedNotes} />
                     </div>

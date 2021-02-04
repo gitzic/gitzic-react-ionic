@@ -10,12 +10,21 @@
     height: 36px;
 }
 
+.seq .note.time {
+    height: 10px;
+    border: 0;
+}
+
 .seq .note-name {
     position: fixed;
     background-color: #fff;
     margin-top: 2px;
     padding-top: 5px;
     width: 35px;
+}
+
+.seq .time .note-name {
+    margin-top: 5px;
 }
 
 .seq .steps {
@@ -27,12 +36,18 @@
     display: inline-block;
     white-space: nowrap;
 }
+
+.seq .note.time div {
+    height: 7px;
+}
+
 .seq .step {
     background-color: #888;
     /* border-left: 3px solid #666; */
     border-radius: 10px;
     cursor: pointer;
     margin: 2px;
+    width: 30px;
 }
 
 .seq .step.even {
@@ -42,4 +57,8 @@
 .seq .step.active,
 .seq .step.active.even {
     background-color: #f88;
+}
+
+.seq .time .step.active {
+    background-color: rgb(136, 184, 255);
 }
