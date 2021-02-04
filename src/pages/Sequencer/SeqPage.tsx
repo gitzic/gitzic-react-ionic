@@ -27,6 +27,7 @@ export const SeqPage: React.FC = () => {
                     <div className="seq">
                         {displayedNotes.map((midi) => (
                             <SeqNote
+                                key={`SeqNote-${midi}`}
                                 midi={midi}
                                 stepPerbeat={stepPerbeat}
                                 beatCount={beatCount}
