@@ -15,6 +15,7 @@ export interface Note {
     duration: number;
     time: number;
     velocity: number;
+    slide?: boolean;
 }
 
 export function setOutputId(id: string) {
@@ -38,9 +39,9 @@ export function setStepsPerBeat(count: number) {
 }
 
 export function getCurrentNotes() {
-    return sequenceData.notes.filter(
-        (note) => isNoteOn(note) || isNoteOff(note),
-    );
+    return sequenceData.notes
+        .filter((note) => isNoteOn(note) || isNoteOff(note))
+        .sort((note) => (isNoteOn(note) && note.slide ? -1 : 1));
 }
 
 export function isNoteOn({ time }: Note) {
@@ -52,7 +53,8 @@ export function isNoteOff({ time, duration }: Note) {
 }
 
 export const sequenceData: SequenceData = {
-    outputId: '7401FE5A1CE0832F1A3DB57CE9C403EBE3B47A682B3F59F525B363594DFCB270',
+    outputId:
+        '7401FE5A1CE0832F1A3DB57CE9C403EBE3B47A682B3F59F525B363594DFCB270',
     outputChannel: 0,
     currentStep: 0,
     beatCount: 4,
@@ -76,6 +78,7 @@ export const sequenceData: SequenceData = {
             duration: 0.5,
             time: 0.5,
             velocity: 100,
+            // slide: true,
         },
         {
             midi: 64,

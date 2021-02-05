@@ -50,10 +50,15 @@ export function addListenerSeqChange(fn: (seq: SequenceData) => void) {
 
 function loop() {
     const newStep = sequenceData.currentStep + STEP;
+    // if (newStep >= sequenceData.beatCount) {
+    //     clearInterval(interval);
+    // }
     sequenceData.currentStep = newStep >= sequenceData.beatCount ? 0 : newStep;
     event.emit(eventKey.onSeqChange, sequenceData);
     const notes = getCurrentNotes();
+    // console.log('notes', notes);
     notes.forEach((note) => {
+        // console.log('note', isNoteOn(note), note);
         if (isNoteOn(note)) {
             midi.outputs
                 .get(sequenceData.outputId)
