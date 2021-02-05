@@ -1,7 +1,7 @@
 import React from 'react';
 import { noteMidi } from '../../hooks/GitZic/note';
 import { Note } from '../../hooks/GitZic/sequence';
-import { STEP_TICK } from '../../hooks/GitZic/sequencer';
+import { MAX_STEPS_PER_BEAT, STEP_TICK } from '../../hooks/GitZic/sequencer';
 
 interface Props {
     beatCount: number;
@@ -38,7 +38,7 @@ export const SeqNote = ({
                     );
                     const duration = step ? step.duration * stepsPerBeat : 1;
                     const even = Math.floor(key / stepsPerBeat) % 2 === 0;
-                    const time = key * STEP_TICK;
+                    const time = key * STEP_TICK * (MAX_STEPS_PER_BEAT / stepsPerBeat);
                     return (
                         <div
                             className={`step ${step && 'active'} ${

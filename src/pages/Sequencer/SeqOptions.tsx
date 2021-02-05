@@ -10,7 +10,8 @@ import {
     setOutputId,
     setStepsPerBeat,
 } from '../../hooks/GitZic/sequence';
-import { MAX_STEPS_PER_BEAT } from '../../hooks/GitZic';
+import { MAX_STEPS_PER_BEAT, STEP_TICK } from '../../hooks/GitZic';
+import { IonToggle } from '@ionic/react';
 
 const listStepsPerbeat = getListStepsPerbeat();
 
@@ -27,20 +28,20 @@ interface Props {
 }
 
 export const SeqOptions = ({ selectedNote }: Props) => {
-    const { midi, sequence } = useGitZic();
+    const {
+        midi,
+        sequence: { beatCount, stepsPerBeat, outputId, outputChannel },
+    } = useGitZic();
     return (
         <div>
-            <select
-                defaultValue={sequence.beatCount}
-                onChange={evNumVal(setBeatCount)}
-            >
+            <select defaultValue={beatCount} onChange={evNumVal(setBeatCount)}>
                 {[...new Array(16)].map((_, key) => (
                     <option key={`beat-${key}`}>{key + 1}</option>
                 ))}
             </select>
             beats of
             <select
-                defaultValue={sequence.stepsPerBeat}
+                defaultValue={stepsPerBeat}
                 onChange={evNumVal(setStepsPerBeat)}
             >
                 {listStepsPerbeat.map((val) => (
@@ -48,7 +49,7 @@ export const SeqOptions = ({ selectedNote }: Props) => {
                 ))}
             </select>
             steps. Output:
-            <select value={sequence.outputId} onChange={evStrVal(setOutputId)}>
+            <select value={outputId} onChange={evStrVal(setOutputId)}>
                 <option value="">None</option>
                 {Array.from(midi?.outputs.values() || []).map(
                     ({ id, name }) => (
@@ -59,7 +60,7 @@ export const SeqOptions = ({ selectedNote }: Props) => {
                 )}
             </select>
             <select
-                defaultValue={sequence.outputChannel}
+                defaultValue={outputChannel}
                 onChange={evNumVal(setOutputChannel)}
             >
                 {[...new Array(16)].map((_, key) => (
@@ -70,15 +71,19 @@ export const SeqOptions = ({ selectedNote }: Props) => {
             </select>
             {selectedNote && (
                 <>
+                    Step length:
                     <select>
-                        {getListStepsPerbeat(sequence.stepsPerBeat).map(
-                            (val) => (
-                                <option key={`stepsPerBeat${val}`} value={1/val}>
-                                    1/{val}
-                                </option>
+                        {[
+                            ...new Array(
+                                1 +
+                                    stepsPerBeat * beatCount -
+                                    selectedNote.time * stepsPerBeat,
                             ),
-                        )}
+                        ].map((_, key) => (
+                            <option key={`step-length-${key}`}>{key}</option>
+                        ))}
                     </select>
+                    <input checked={selectedNote.slide} type="checkbox" /> slide
                 </>
             )}
         </div>
