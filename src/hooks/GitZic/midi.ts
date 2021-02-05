@@ -30,7 +30,7 @@ function onMIDIError(error: any) {
 }
 
 function onMIDIMessage({ data }: WebMidi.MIDIMessageEvent) {
-    console.log('MIDI data', data);
+    // console.log('MIDI data', data);
 }
 
 export function initMIDI() {

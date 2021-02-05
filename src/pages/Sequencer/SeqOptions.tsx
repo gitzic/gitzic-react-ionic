@@ -1,9 +1,13 @@
 import React from 'react';
 
 import { useGitZic } from '../../hooks/useGitZic';
-import { evNumVal } from '../../utils/event';
+import { evNumVal, evStrVal } from '../../utils/event';
 
-import { setBeatCount, setStepsPerBeat } from '../../hooks/GitZic/sequence';
+import {
+    setBeatCount,
+    setOutputId,
+    setStepsPerBeat,
+} from '../../hooks/GitZic/sequence';
 import { MAX_STEPS_PER_BEAT } from '../../hooks/GitZic';
 
 const listStepsPerbeat = [1];
@@ -14,7 +18,6 @@ listStepsPerbeat.sort();
 
 export const SeqOptions = () => {
     const { midi, sequence } = useGitZic();
-
     return (
         <div>
             <select
@@ -35,7 +38,11 @@ export const SeqOptions = () => {
                 ))}
             </select>
             steps. Output:
-            <select>
+            <select
+                defaultValue={sequence.outputId}
+                onChange={evStrVal(setOutputId)}
+            >
+                <option value="">None</option>
                 {Array.from(midi?.outputs.values() || []).map(
                     ({ id, name }) => (
                         <option key={`midiOutput-${id}`} value={id}>
