@@ -48,7 +48,7 @@ export const SeqNote = ({
                                 selectedNote?.midi === midi &&
                                 selectedNote.time === time &&
                                 'selected'
-                            }`}
+                            } ${step?.slide && 'slide'}`}
                             key={`step-${key}`}
                             onClick={() =>
                                 setSelectedNote({

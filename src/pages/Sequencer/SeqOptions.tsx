@@ -102,7 +102,7 @@ export const SeqOptions = ({ selectedNote, setSelectedNote }: Props) => {
                             marginTop: -8,
                             padding: 0,
                         }}
-                        color={selectedNote.slide ? 'primary' : 'light'}
+                        color={selectedNote.slide ? 'danger' : 'light'}
                         onClick={() => {
                             const note = {
                                 ...selectedNote,
