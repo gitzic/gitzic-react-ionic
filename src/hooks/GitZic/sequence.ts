@@ -42,7 +42,7 @@ export function getCurrentNotes() {
     return sequenceData.notes
         .filter((note) => isNoteOn(note) || isNoteOff(note))
         .sort((_, note) =>
-            isNoteOff(note) && note.slide ? -1 : isNoteOn(note) ? -1 : 1,
+            isNoteOff(note) && note.slide ? -1 : 1,
         );
 }
 
@@ -70,8 +70,9 @@ export function setNote(note: Note) {
     } else {
         sequenceData.notes[index] = note;
     }
-    console.log('note', note);
-    console.log('sequenceData', sequenceData);
+    sequenceData.notes.sort((a, b) => a.time - b.time);
+    // console.log('note', note);
+    // console.log('sequenceData', sequenceData);
     event.emit(eventKey.onSeqChange, sequenceData);
 }
 
