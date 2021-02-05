@@ -63,6 +63,7 @@ function loop() {
             midi?.outputs
                 .get(sequenceData.outputId)
                 ?.send([0x90 + sequenceData.outputChannel, note.midi, note.velocity]);
+                // console.log(note.midi, note.velocity);
         } else {
             midi?.outputs
                 .get(sequenceData.outputId)

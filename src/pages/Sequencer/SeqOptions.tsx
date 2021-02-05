@@ -104,13 +104,34 @@ export const SeqOptions = ({ selectedNote, setSelectedNote }: Props) => {
                         }}
                         color={selectedNote.slide ? 'primary' : 'light'}
                         onClick={() => {
-                            const note = { ...selectedNote, slide: !selectedNote.slide };
+                            const note = {
+                                ...selectedNote,
+                                slide: !selectedNote.slide,
+                            };
                             setSelectedNote(note);
                             setNote(note);
                         }}
                     >
                         Slide
                     </IonButton>
+                    {' '}velocity:
+                    <select
+                        value={selectedNote.velocity}
+                        onChange={evNumVal((velocity) => {
+                            const note = {
+                                ...selectedNote,
+                                velocity,
+                            };
+                            setSelectedNote(note);
+                            setNote(note);
+                        })}
+                    >
+                        {[...new Array(127)].map((_, key) => (
+                            <option key={`step-velocity-${key}`}>
+                                {key + 1}
+                            </option>
+                        ))}
+                    </select>
                 </>
             )}
         </div>
