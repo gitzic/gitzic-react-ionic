@@ -7,22 +7,21 @@ import './Seq.css';
 import { getSteps } from './utils';
 import { SeqOptions } from './SeqOptions';
 import { SeqNote } from './SeqNote';
-import { SeqAddNote } from './SeqAddNote';
+import { SeqAddDisplayNote } from './SeqAddDisplayNote';
 import { SeqTime } from './SeqTime';
 import { Note } from '../../hooks/GitZic/sequence';
 
 export const SeqPage: React.FC = () => {
-    const {
-        sequences: [{
-            displayedNotes,
-            beatCount,
-            notes,
-            currentStep,
-            stepsPerBeat,
-        }],
-    } = useGitZic();
+    const { sequences } = useGitZic();
     const [currentSeq, setCurrentSeq] = useState<number>(0);
     const [selectedNote, setSelectedNote] = useState<Note>();
+    const {
+        displayedNotes,
+        beatCount,
+        notes,
+        currentStep,
+        stepsPerBeat,
+    } = sequences[currentSeq];
     return (
         <IonPage>
             <IonContent fullscreen>
@@ -51,7 +50,10 @@ export const SeqPage: React.FC = () => {
                             currentStep={currentStep}
                         />
                     </div>
-                    <SeqAddNote excludeNotes={displayedNotes} />
+                    <SeqAddDisplayNote
+                        excludeNotes={displayedNotes}
+                        currentSeq={currentSeq}
+                    />
                 </div>
             </IonContent>
         </IonPage>

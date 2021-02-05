@@ -93,42 +93,25 @@ export function setNote(id: number) {
     };
 }
 
-export const sequences: SequenceData[] = [
-    {
-        name: 'Test',
-        outputId:
-            '7401FE5A1CE0832F1A3DB57CE9C403EBE3B47A682B3F59F525B363594DFCB270',
+export function setDisplayNote(id: number) {
+    return (midi: number) => {
+        sequences[id].displayedNotes.push(midi);
+    };
+}
+
+export function addNew() {
+    sequences.push({
+        name: (new Date()).toLocaleString(),
+        outputId: '',
         outputChannel: 0,
         currentStep: 0,
         beatCount: 4,
         stepsPerBeat: 4,
-        displayedNotes: [64, 62, 60, 58, 50],
-        notes: [
-            // {
-            //     midi: 60,
-            //     duration: 0.25,
-            //     time: 0,
-            //     velocity: 90,
-            // },
-            {
-                midi: 58,
-                duration: 0.5,
-                time: 0,
-                velocity: 90,
-                slide: true,
-            },
-            {
-                midi: 62,
-                duration: 0.5,
-                time: 0.5,
-                velocity: 90,
-            },
-            {
-                midi: 64,
-                duration: 1,
-                time: 2,
-                velocity: 127,
-            },
-        ],
-    },
-];
+        displayedNotes: [],
+        notes: [],
+    });
+}
+
+export const sequences: SequenceData[] = [];
+
+!sequences.length && addNew();

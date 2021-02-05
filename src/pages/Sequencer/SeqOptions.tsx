@@ -5,6 +5,7 @@ import { useGitZic } from '../../hooks/useGitZic';
 import { evNumVal, evStrVal } from '../../utils/event';
 
 import {
+    addNew,
     Note,
     setBeatCount,
     setNote,
@@ -36,25 +37,40 @@ export const SeqOptions = ({
     selectedNote,
     setSelectedNote,
     currentSeq,
+    setCurrentSeq,
 }: Props) => {
     const { midi, sequences } = useGitZic();
-    const { name, beatCount, stepsPerBeat, outputId, outputChannel } = sequences[
-        currentSeq
-    ];
+    const {
+        name,
+        beatCount,
+        stepsPerBeat,
+        outputId,
+        outputChannel,
+    } = sequences[currentSeq];
     return (
         <div>
             <select
-                // defaultValue={beatCount}
-                // onChange={evNumVal(setBeatCount(0))}
+                defaultValue={currentSeq}
+                onChange={evStrVal((val) => {
+                    if (val === 'new') {
+                        addNew();
+                    } else {
+                        console.log('set current seq', val);
+                        setCurrentSeq(Number(val));
+                    }
+                })}
             >
-                {sequences.map(({name}, key) => (
-                    <option key={`seq-name-${key}`} value={key}>{name}</option>
+                {sequences.map(({ name }, key) => (
+                    <option key={`seq-name-${key}`} value={key}>
+                        {name}
+                    </option>
                 ))}
+                <option value="new">New</option>
             </select>
             <SeqEditName currentSeq={currentSeq} value={name} />
             <select
                 defaultValue={beatCount}
-                onChange={evNumVal(setBeatCount(0))}
+                onChange={evNumVal(setBeatCount(currentSeq))}
             >
                 {[...new Array(16)].map((_, key) => (
                     <option key={`beat-${key}`}>{key + 1}</option>
@@ -70,7 +86,7 @@ export const SeqOptions = ({
                 ))}
             </select>
             steps. Output:
-            <select value={outputId} onChange={evStrVal(setOutputId(0))}>
+            <select value={outputId} onChange={evStrVal(setOutputId(currentSeq))}>
                 <option value="">None</option>
                 {Array.from(midi?.outputs.values() || []).map(
                     ({ id, name }) => (
@@ -101,7 +117,7 @@ export const SeqOptions = ({
                                 duration: value / stepsPerBeat,
                             };
                             setSelectedNote(note);
-                            setNote(0)(note);
+                            setNote(currentSeq)(note);
                         })}
                     >
                         {[
@@ -128,7 +144,7 @@ export const SeqOptions = ({
                                 slide: !selectedNote.slide,
                             };
                             setSelectedNote(note);
-                            setNote(0)(note);
+                            setNote(currentSeq)(note);
                         }}
                     >
                         Slide
@@ -142,7 +158,7 @@ export const SeqOptions = ({
                                 velocity,
                             };
                             setSelectedNote(note);
-                            setNote(0)(note);
+                            setNote(currentSeq)(note);
                         })}
                     >
                         {[...new Array(127)].map((_, key) => (
