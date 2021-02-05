@@ -41,7 +41,7 @@ export function setStepsPerBeat(count: number) {
 export function getCurrentNotes() {
     return sequenceData.notes
         .filter((note) => isNoteOn(note) || isNoteOff(note))
-        .sort((note) => (isNoteOn(note) && note.slide ? -1 : 1));
+        .sort((_, note) => (isNoteOff(note) && note.slide ? -1 : 1));
 }
 
 export function isNoteOn({ time }: Note) {
@@ -72,13 +72,13 @@ export const sequenceData: SequenceData = {
             duration: 0.5,
             time: 0,
             velocity: 100,
+            slide: true,
         },
         {
             midi: 62,
             duration: 0.5,
             time: 0.5,
             velocity: 100,
-            // slide: true,
         },
         {
             midi: 64,

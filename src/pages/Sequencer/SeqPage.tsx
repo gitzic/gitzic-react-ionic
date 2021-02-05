@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IonContent, IonPage } from '@ionic/react';
 
 import { useGitZic } from '../../hooks/useGitZic';
@@ -9,16 +9,24 @@ import { SeqOptions } from './SeqOptions';
 import { SeqNote } from './SeqNote';
 import { SeqAddNote } from './SeqAddNote';
 import { SeqTime } from './SeqTime';
+import { Note } from '../../hooks/GitZic/sequence';
 
 export const SeqPage: React.FC = () => {
     const {
-        sequence: { displayedNotes, beatCount, notes, currentStep, stepsPerBeat },
+        sequence: {
+            displayedNotes,
+            beatCount,
+            notes,
+            currentStep,
+            stepsPerBeat,
+        },
     } = useGitZic();
+    const [selectedNote, setSelectedNote] = useState<Note>();
     return (
         <IonPage>
             <IonContent fullscreen>
                 <div className="container">
-                    <SeqOptions />
+                    <SeqOptions selectedNote={selectedNote} />
                     <div className="seq">
                         {displayedNotes.map((midi) => (
                             <SeqNote
@@ -27,6 +35,8 @@ export const SeqPage: React.FC = () => {
                                 stepsPerBeat={stepsPerBeat}
                                 beatCount={beatCount}
                                 steps={getSteps(midi, notes)}
+                                selectedNote={selectedNote}
+                                setSelectedNote={setSelectedNote}
                             />
                         ))}
                         <SeqTime
@@ -34,9 +44,8 @@ export const SeqPage: React.FC = () => {
                             beatCount={beatCount}
                             currentStep={currentStep}
                         />
-                        <br />
-                        <SeqAddNote excludeNotes={displayedNotes} />
                     </div>
+                    <SeqAddNote excludeNotes={displayedNotes} />
                 </div>
             </IonContent>
         </IonPage>

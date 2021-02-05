@@ -4,6 +4,7 @@ import { useGitZic } from '../../hooks/useGitZic';
 import { evNumVal, evStrVal } from '../../utils/event';
 
 import {
+    Note,
     setBeatCount,
     setOutputChannel,
     setOutputId,
@@ -11,13 +12,21 @@ import {
 } from '../../hooks/GitZic/sequence';
 import { MAX_STEPS_PER_BEAT } from '../../hooks/GitZic';
 
-const listStepsPerbeat = [1];
-for (let val = MAX_STEPS_PER_BEAT; val > 1; val = val / 2) {
-    listStepsPerbeat.push(val);
-}
-listStepsPerbeat.sort();
+const listStepsPerbeat = getListStepsPerbeat();
 
-export const SeqOptions = () => {
+function getListStepsPerbeat(val = MAX_STEPS_PER_BEAT) {
+    const list = [1];
+    for (; val > 1; val = val / 2) {
+        list.push(val);
+    }
+    return list.sort();
+}
+
+interface Props {
+    selectedNote: Note | undefined;
+}
+
+export const SeqOptions = ({ selectedNote }: Props) => {
     const { midi, sequence } = useGitZic();
     return (
         <div>
@@ -39,10 +48,7 @@ export const SeqOptions = () => {
                 ))}
             </select>
             steps. Output:
-            <select
-                value={sequence.outputId}
-                onChange={evStrVal(setOutputId)}
-            >
+            <select value={sequence.outputId} onChange={evStrVal(setOutputId)}>
                 <option value="">None</option>
                 {Array.from(midi?.outputs.values() || []).map(
                     ({ id, name }) => (
@@ -57,9 +63,24 @@ export const SeqOptions = () => {
                 onChange={evNumVal(setOutputChannel)}
             >
                 {[...new Array(16)].map((_, key) => (
-                    <option key={`channel-${key}`} value={key}>channel {key + 1}</option>
+                    <option key={`channel-${key}`} value={key}>
+                        channel {key + 1}
+                    </option>
                 ))}
             </select>
+            {selectedNote && (
+                <>
+                    <select>
+                        {getListStepsPerbeat(sequence.stepsPerBeat).map(
+                            (val) => (
+                                <option key={`stepsPerBeat${val}`} value={1/val}>
+                                    1/{val}
+                                </option>
+                            ),
+                        )}
+                    </select>
+                </>
+            )}
         </div>
     );
 };

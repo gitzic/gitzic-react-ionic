@@ -23,8 +23,8 @@
     width: 35px;
 }
 
-.seq .time .note-name {
-    margin-top: 5px;
+.seq .note.time .note-name {
+    height: 12px;
 }
 
 .seq .steps {
@@ -42,7 +42,7 @@
 }
 
 .seq .step {
-    background-color: #888;
+    background-color: #999;
     /* border-left: 3px solid #666; */
     border-radius: 10px;
     cursor: pointer;
@@ -51,12 +51,16 @@
 }
 
 .seq .step.even {
-    background-color: #aaa;
+    background-color: #bbb;
 }
 
 .seq .step.active,
 .seq .step.active.even {
     background-color: #f88;
+}
+
+.seq .step.selected {
+    border: 3px dashed #666;
 }
 
 .seq .time .step.active {

@@ -9,7 +9,7 @@ import {
 import { between } from './utils';
 
 export const MAX_STEPS_PER_BEAT = 8;
-const STEP = 1 / MAX_STEPS_PER_BEAT;
+export const STEP_TICK = 1 / MAX_STEPS_PER_BEAT;
 
 let interval: NodeJS.Timeout;
 
@@ -49,7 +49,7 @@ export function addListenerSeqChange(fn: (seq: SequenceData) => void) {
 }
 
 function loop() {
-    const newStep = sequenceData.currentStep + STEP;
+    const newStep = sequenceData.currentStep + STEP_TICK;
     // if (newStep >= sequenceData.beatCount) {
     //     clearInterval(interval);
     // }
@@ -60,11 +60,11 @@ function loop() {
     notes.forEach((note) => {
         // console.log('note', isNoteOn(note), note);
         if (isNoteOn(note)) {
-            midi.outputs
+            midi?.outputs
                 .get(sequenceData.outputId)
                 ?.send([0x90 + sequenceData.outputChannel, note.midi, note.velocity]);
         } else {
-            midi.outputs
+            midi?.outputs
                 .get(sequenceData.outputId)
                 ?.send([0x80 + sequenceData.outputChannel, note.midi, 0]);
         }
