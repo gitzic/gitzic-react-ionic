@@ -50,12 +50,12 @@ export const SeqOptions = ({
     return (
         <div>
             <select
-                defaultValue={currentSeq}
+                value={currentSeq}
                 onChange={evStrVal((val) => {
                     if (val === 'new') {
                         addNew();
+                        setCurrentSeq(sequences.length);
                     } else {
-                        console.log('set current seq', val);
                         setCurrentSeq(Number(val));
                     }
                 })}

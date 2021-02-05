@@ -110,6 +110,7 @@ export function addNew() {
         displayedNotes: [],
         notes: [],
     });
+    event.emit(eventKey.onSeqChange, sequences);
 }
 
 export const sequences: SequenceData[] = [];
