@@ -3,6 +3,7 @@ import { SequenceData, sequenceData } from './sequence';
 import { between } from './utils';
 
 export const MAX_STEPS_PER_BEAT = 8;
+const STEP = 1 / MAX_STEPS_PER_BEAT;
 
 let interval: NodeJS.Timeout;
 
@@ -42,8 +43,7 @@ export function addListenerSeqChange(fn: (seq: SequenceData) => void) {
 }
 
 function loop() {
-    const ms = 1 / MAX_STEPS_PER_BEAT;
-    const newTime = sequenceData.currentTime + ms;
-    sequenceData.currentTime = newTime >= sequenceData.beatCount ? 0 : newTime;
+    const newStep = sequenceData.currentStep + STEP;
+    sequenceData.currentStep = newStep >= sequenceData.beatCount ? 0 : newStep;
     event.emit(eventKey.onSeqChange, sequenceData);
 }

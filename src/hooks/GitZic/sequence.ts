@@ -1,8 +1,11 @@
+import { event, eventKey } from "./event";
+
 export interface SequenceData {
     beatCount: number;
+    stepsPerBeat: number;
     displayedNotes: number[];
     notes: Note[];
-    currentTime: number;
+    currentStep: number;
 }
 
 export interface Note {
@@ -11,11 +14,20 @@ export interface Note {
     time: number;
 }
 
-export function setBeatCount(count: number) {}
+export function setBeatCount(count: number) {
+    sequenceData.beatCount = count;
+    event.emit(eventKey.onSeqChange, sequenceData);
+}
+
+export function setStepsPerBeat(count: number) {
+    sequenceData.stepsPerBeat = count;
+    event.emit(eventKey.onSeqChange, sequenceData);
+}
 
 export const sequenceData: SequenceData = {
-    currentTime: 0,
+    currentStep: 0,
     beatCount: 4,
+    stepsPerBeat: 4,
     displayedNotes: [64, 62, 60, 58, 50],
     notes: [
         {

@@ -12,31 +12,27 @@ import { SeqTime } from './SeqTime';
 
 export const SeqPage: React.FC = () => {
     const {
-        sequence: { displayedNotes, beatCount, notes, currentTime },
+        sequence: { displayedNotes, beatCount, notes, currentStep, stepsPerBeat },
     } = useGitZic();
-    const [stepPerbeat, setStepPerBeat] = React.useState(4);
     return (
         <IonPage>
             <IonContent fullscreen>
                 <div className="container">
-                    <SeqOptions
-                        setStepPerBeat={setStepPerBeat}
-                        stepPerbeat={stepPerbeat}
-                    />
+                    <SeqOptions />
                     <div className="seq">
                         {displayedNotes.map((midi) => (
                             <SeqNote
                                 key={`SeqNote-${midi}`}
                                 midi={midi}
-                                stepPerbeat={stepPerbeat}
+                                stepsPerBeat={stepsPerBeat}
                                 beatCount={beatCount}
                                 steps={getSteps(midi, notes)}
                             />
                         ))}
                         <SeqTime
-                            stepPerbeat={stepPerbeat}
+                            stepsPerBeat={stepsPerBeat}
                             beatCount={beatCount}
-                            currentTime={currentTime}
+                            currentStep={currentStep}
                         />
                         <br />
                         <SeqAddNote excludeNotes={displayedNotes} />
