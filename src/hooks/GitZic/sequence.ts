@@ -61,6 +61,7 @@ export function findIndexNote(note: Note) {
 }
 
 export function setNote(note: Note) {
+    // when note change if duration reduce, need to check if it is not currently on, if yes need to off
     const index = findIndexNote(note);
     if (index === -1) {
         sequenceData.notes.push(note);
@@ -89,20 +90,20 @@ export const sequenceData: SequenceData = {
         //     midi: 60,
         //     duration: 0.25,
         //     time: 0,
-        //     velocity: 100,
+        //     velocity: 90,
         // },
         {
             midi: 58,
             duration: 0.5,
             time: 0,
-            velocity: 100,
+            velocity: 90,
             slide: true,
         },
         {
             midi: 62,
             duration: 0.5,
             time: 0.5,
-            velocity: 100,
+            velocity: 90,
         },
         {
             midi: 64,
