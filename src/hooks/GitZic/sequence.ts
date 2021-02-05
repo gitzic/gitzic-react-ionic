@@ -81,7 +81,7 @@ export function setNote(id: number) {
         if (index === -1) {
             sequences[id].notes.push(note);
         } else if (!note.duration) {
-            console.log('delete', sequences[id].notes[index]);
+            // console.log('delete', sequences[id].notes[index]);
             delete sequences[id].notes[index];
         } else {
             sequences[id].notes[index] = note;

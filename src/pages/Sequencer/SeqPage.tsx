@@ -37,6 +37,7 @@ export const SeqPage: React.FC = () => {
                             <SeqNote
                                 key={`SeqNote-${midi}`}
                                 midi={midi}
+                                currentSeq={currentSeq}
                                 stepsPerBeat={stepsPerBeat}
                                 beatCount={beatCount}
                                 steps={getSteps(midi, notes)}

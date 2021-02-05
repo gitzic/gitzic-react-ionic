@@ -1,6 +1,6 @@
 import React from 'react';
 import { noteMidi } from '../../hooks/GitZic/note';
-import { Note } from '../../hooks/GitZic/sequence';
+import { Note, setNote } from '../../hooks/GitZic/sequence';
 import { MAX_STEPS_PER_BEAT, STEP_TICK } from '../../hooks/GitZic/sequencer';
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
     steps: Note[];
     setSelectedNote: React.Dispatch<React.SetStateAction<Note | undefined>>;
     selectedNote: Note | undefined;
+    currentSeq: number;
 }
 
 export const SeqNote = ({
@@ -19,6 +20,7 @@ export const SeqNote = ({
     steps,
     setSelectedNote,
     selectedNote,
+    currentSeq,
 }: Props) => {
     return (
         <div className="note">
@@ -38,8 +40,9 @@ export const SeqNote = ({
                     );
                     const duration = step ? step.duration * stepsPerBeat : 1;
                     const even = Math.floor(key / stepsPerBeat) % 2 === 0;
-                    const time =
-                        key * STEP_TICK * (MAX_STEPS_PER_BEAT / stepsPerBeat);
+                    const seqStepTick =
+                        STEP_TICK * (MAX_STEPS_PER_BEAT / stepsPerBeat);
+                    const time = key * seqStepTick;
                     return (
                         <div
                             className={`step ${step && 'active'} ${
@@ -50,16 +53,16 @@ export const SeqNote = ({
                                 'selected'
                             } ${step?.slide && 'slide'}`}
                             key={`step-${key}`}
-                            onClick={() =>
-                                setSelectedNote({
-                                    ...(step || {
-                                        midi,
-                                        duration: 0,
-                                        time,
-                                        velocity: 100,
-                                    }),
-                                })
-                            }
+                            onClick={() => {
+                                const note = step || {
+                                    midi,
+                                    duration: seqStepTick,
+                                    time,
+                                    velocity: 100,
+                                };
+                                setSelectedNote({ ...note });
+                                setNote(currentSeq)(note);
+                            }}
                             style={{
                                 width: 30 * duration + 4 * (duration - 1),
                             }}
