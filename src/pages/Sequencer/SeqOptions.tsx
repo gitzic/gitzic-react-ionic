@@ -12,6 +12,7 @@ import {
     setStepsPerBeat,
 } from '../../hooks/GitZic/sequence';
 import { MAX_STEPS_PER_BEAT, STEP_TICK } from '../../hooks/GitZic';
+import { IonButton } from '@ionic/react';
 
 const listStepsPerbeat = getListStepsPerbeat();
 
@@ -94,16 +95,22 @@ export const SeqOptions = ({ selectedNote, setSelectedNote }: Props) => {
                             <option key={`step-length-${key}`}>{key}</option>
                         ))}
                     </select>
-                    <input
-                        checked={selectedNote.slide}
-                        type="checkbox"
-                        onChange={({ target: { checked: slide } }) => {
-                            const note = { ...selectedNote, slide };
+                    <IonButton
+                        size="small"
+                        style={{
+                            height: 20,
+                            marginTop: -8,
+                            padding: 0,
+                        }}
+                        color={selectedNote.slide ? 'primary' : 'light'}
+                        onClick={() => {
+                            const note = { ...selectedNote, slide: !selectedNote.slide };
                             setSelectedNote(note);
                             setNote(note);
                         }}
-                    />{' '}
-                    slide
+                    >
+                        Slide
+                    </IonButton>
                 </>
             )}
         </div>
