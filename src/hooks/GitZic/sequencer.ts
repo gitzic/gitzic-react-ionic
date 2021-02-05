@@ -57,11 +57,11 @@ function loop() {
         if (isNoteOn(note)) {
             midi.outputs
                 .get(sequenceData.outputId)
-                ?.send([0x90, note.midi, note.velocity]);
+                ?.send([0x90 + sequenceData.outputChannel, note.midi, note.velocity]);
         } else {
             midi.outputs
                 .get(sequenceData.outputId)
-                ?.send([0x80, note.midi, note.velocity]);
+                ?.send([0x80 + sequenceData.outputChannel, note.midi, note.velocity]);
         }
     });
 }

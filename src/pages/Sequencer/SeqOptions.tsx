@@ -5,6 +5,7 @@ import { evNumVal, evStrVal } from '../../utils/event';
 
 import {
     setBeatCount,
+    setOutputChannel,
     setOutputId,
     setStepsPerBeat,
 } from '../../hooks/GitZic/sequence';
@@ -39,7 +40,7 @@ export const SeqOptions = () => {
             </select>
             steps. Output:
             <select
-                defaultValue={sequence.outputId}
+                value={sequence.outputId}
                 onChange={evStrVal(setOutputId)}
             >
                 <option value="">None</option>
@@ -50,6 +51,14 @@ export const SeqOptions = () => {
                         </option>
                     ),
                 )}
+            </select>
+            <select
+                defaultValue={sequence.outputChannel}
+                onChange={evNumVal(setOutputChannel)}
+            >
+                {[...new Array(16)].map((_, key) => (
+                    <option key={`channel-${key}`} value={key}>channel {key + 1}</option>
+                ))}
             </select>
         </div>
     );
