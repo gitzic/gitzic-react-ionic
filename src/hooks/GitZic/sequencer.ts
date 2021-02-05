@@ -61,7 +61,7 @@ function loop() {
         } else {
             midi.outputs
                 .get(sequenceData.outputId)
-                ?.send([0x80 + sequenceData.outputChannel, note.midi, note.velocity]);
+                ?.send([0x80 + sequenceData.outputChannel, note.midi, 0]);
         }
     });
 }
