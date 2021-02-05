@@ -13,14 +13,15 @@ import { Note } from '../../hooks/GitZic/sequence';
 
 export const SeqPage: React.FC = () => {
     const {
-        sequence: {
+        sequences: [{
             displayedNotes,
             beatCount,
             notes,
             currentStep,
             stepsPerBeat,
-        },
+        }],
     } = useGitZic();
+    const [currentSeq, setCurrentSeq] = useState<number>(0);
     const [selectedNote, setSelectedNote] = useState<Note>();
     return (
         <IonPage>
@@ -29,6 +30,8 @@ export const SeqPage: React.FC = () => {
                     <SeqOptions
                         selectedNote={selectedNote}
                         setSelectedNote={setSelectedNote}
+                        currentSeq={currentSeq}
+                        setCurrentSeq={setCurrentSeq}
                     />
                     <div className="seq">
                         {displayedNotes.map((midi) => (

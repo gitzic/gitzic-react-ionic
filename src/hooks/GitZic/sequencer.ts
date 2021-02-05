@@ -4,7 +4,7 @@ import {
     getCurrentNotes,
     isNoteOn,
     SequenceData,
-    sequenceData,
+    sequences,
 } from './sequence';
 import { between } from './utils';
 
@@ -44,30 +44,34 @@ export function setBpm(newBpm: number) {
     event.emit(eventKey.onBPMchange, sequencer.tempo);
 }
 
-export function addListenerSeqChange(fn: (seq: SequenceData) => void) {
+export function addListenerSeqChange(fn: (seq: SequenceData[]) => void) {
     event.addListener(eventKey.onSeqChange, fn);
 }
 
 function loop() {
-    const newStep = sequenceData.currentStep + STEP_TICK;
-    // if (newStep >= sequenceData.beatCount) {
-    //     clearInterval(interval);
-    // }
-    sequenceData.currentStep = newStep >= sequenceData.beatCount ? 0 : newStep;
-    event.emit(eventKey.onSeqChange, sequenceData);
-    const notes = getCurrentNotes();
-    // console.log('notes', notes);
-    notes.forEach((note) => {
-        // console.log('note', isNoteOn(note), note);
-        if (isNoteOn(note)) {
-            midi?.outputs
-                .get(sequenceData.outputId)
-                ?.send([0x90 + sequenceData.outputChannel, note.midi, note.velocity]);
+    sequences.forEach((sequence, id) => {
+        const newStep = sequence.currentStep + STEP_TICK;
+        sequence.currentStep =
+            newStep >= sequence.beatCount ? 0 : newStep;
+        event.emit(eventKey.onSeqChange, sequences);
+        const notes = getCurrentNotes(id);
+        // console.log('notes', notes);
+        notes.forEach((note) => {
+            // console.log('note', isNoteOn(note), note);
+            if (isNoteOn(id, note)) {
+                midi?.outputs
+                    .get(sequence.outputId)
+                    ?.send([
+                        0x90 + sequence.outputChannel,
+                        note.midi,
+                        note.velocity,
+                    ]);
                 // console.log(note.midi, note.velocity);
-        } else {
-            midi?.outputs
-                .get(sequenceData.outputId)
-                ?.send([0x80 + sequenceData.outputChannel, note.midi, 0]);
-        }
+            } else {
+                midi?.outputs
+                    .get(sequence.outputId)
+                    ?.send([0x80 + sequence.outputChannel, note.midi, 0]);
+            }
+        });
     });
 }

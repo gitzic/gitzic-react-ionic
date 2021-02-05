@@ -8,22 +8,20 @@ import {
     addListenerBPMchange,
     addListenerSeqChange,
 } from './GitZic';
-import { sequenceData, SequenceData } from './GitZic/sequence';
+import { sequences as sequencesDefault, SequenceData } from './GitZic/sequence';
 
 // inspired by https://github.com/matthewshirley/react-midi-hook
 
 interface Context {
     midi?: WebMidi.MIDIAccess;
     error?: any;
-    sequence: SequenceData;
+    sequences: SequenceData[];
     tempo: Tempo;
-    seq: SequenceData;
 }
 
 export const GitZicContext = createContext<Context>({
-    sequence: sequenceData,
+    sequences: sequencesDefault,
     tempo: sequencer.tempo,
-    seq: sequenceData,
 });
 
 export function useGitZic() {
@@ -34,21 +32,20 @@ export function GitZicProvider({ children }: React.PropsWithChildren<{}>) {
     const [midi, setMidi] = useState<WebMidi.MIDIAccess>();
     const [error, setError] = useState<any>(false);
     const [tempo, setTempo] = useState<Tempo>(sequencer.tempo);
-    const [seq, setSeq] = useState<SequenceData>(sequenceData);
+    const [sequences, setSequences] = useState<SequenceData[]>(sequencesDefault);
 
     const provided = {
         midi,
         error,
         tempo,
-        seq,
-        sequence: sequenceData,
+        sequences,
     };
 
     useEffect(() => {
         addListenerMidiSuccess(setMidi);
         addListenerMidiError(setError);
         addListenerBPMchange(setTempo);
-        addListenerSeqChange((seq) => { setSeq({...seq});  });
+        addListenerSeqChange((seq) => { setSequences([...seq]);  });
         init();
     }, []);
 

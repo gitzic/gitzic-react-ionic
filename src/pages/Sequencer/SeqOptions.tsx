@@ -1,4 +1,5 @@
 import React from 'react';
+import { IonButton } from '@ionic/react';
 
 import { useGitZic } from '../../hooks/useGitZic';
 import { evNumVal, evStrVal } from '../../utils/event';
@@ -11,8 +12,8 @@ import {
     setOutputId,
     setStepsPerBeat,
 } from '../../hooks/GitZic/sequence';
-import { MAX_STEPS_PER_BEAT, STEP_TICK } from '../../hooks/GitZic';
-import { IonButton } from '@ionic/react';
+import { MAX_STEPS_PER_BEAT } from '../../hooks/GitZic';
+import { SeqEditName } from './SeqEditName';
 
 const listStepsPerbeat = getListStepsPerbeat();
 
@@ -27,16 +28,34 @@ function getListStepsPerbeat(val = MAX_STEPS_PER_BEAT) {
 interface Props {
     selectedNote: Note | undefined;
     setSelectedNote: React.Dispatch<React.SetStateAction<Note | undefined>>;
+    currentSeq: number;
+    setCurrentSeq: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const SeqOptions = ({ selectedNote, setSelectedNote }: Props) => {
-    const {
-        midi,
-        sequence: { beatCount, stepsPerBeat, outputId, outputChannel },
-    } = useGitZic();
+export const SeqOptions = ({
+    selectedNote,
+    setSelectedNote,
+    currentSeq,
+}: Props) => {
+    const { midi, sequences } = useGitZic();
+    const { name, beatCount, stepsPerBeat, outputId, outputChannel } = sequences[
+        currentSeq
+    ];
     return (
         <div>
-            <select defaultValue={beatCount} onChange={evNumVal(setBeatCount)}>
+            <select
+                // defaultValue={beatCount}
+                // onChange={evNumVal(setBeatCount(0))}
+            >
+                {sequences.map(({name}, key) => (
+                    <option key={`seq-name-${key}`} value={key}>{name}</option>
+                ))}
+            </select>
+            <SeqEditName currentSeq={currentSeq} value={name} />
+            <select
+                defaultValue={beatCount}
+                onChange={evNumVal(setBeatCount(0))}
+            >
                 {[...new Array(16)].map((_, key) => (
                     <option key={`beat-${key}`}>{key + 1}</option>
                 ))}
@@ -51,7 +70,7 @@ export const SeqOptions = ({ selectedNote, setSelectedNote }: Props) => {
                 ))}
             </select>
             steps. Output:
-            <select value={outputId} onChange={evStrVal(setOutputId)}>
+            <select value={outputId} onChange={evStrVal(setOutputId(0))}>
                 <option value="">None</option>
                 {Array.from(midi?.outputs.values() || []).map(
                     ({ id, name }) => (
@@ -82,7 +101,7 @@ export const SeqOptions = ({ selectedNote, setSelectedNote }: Props) => {
                                 duration: value / stepsPerBeat,
                             };
                             setSelectedNote(note);
-                            setNote(note);
+                            setNote(0)(note);
                         })}
                     >
                         {[
@@ -109,12 +128,12 @@ export const SeqOptions = ({ selectedNote, setSelectedNote }: Props) => {
                                 slide: !selectedNote.slide,
                             };
                             setSelectedNote(note);
-                            setNote(note);
+                            setNote(0)(note);
                         }}
                     >
                         Slide
-                    </IonButton>
-                    {' '}velocity:
+                    </IonButton>{' '}
+                    velocity:
                     <select
                         value={selectedNote.velocity}
                         onChange={evNumVal((velocity) => {
@@ -123,7 +142,7 @@ export const SeqOptions = ({ selectedNote, setSelectedNote }: Props) => {
                                 velocity,
                             };
                             setSelectedNote(note);
-                            setNote(note);
+                            setNote(0)(note);
                         })}
                     >
                         {[...new Array(127)].map((_, key) => (
