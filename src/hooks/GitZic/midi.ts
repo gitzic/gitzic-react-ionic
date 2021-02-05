@@ -1,5 +1,7 @@
 import { event, eventKey } from './event';
 
+export let midi: WebMidi.MIDIAccess;
+
 export function addListenerMidiSuccess(
     fn: (midiAccess: WebMidi.MIDIAccess) => void,
 ) {
@@ -7,8 +9,9 @@ export function addListenerMidiSuccess(
 }
 
 function onMIDISuccess(midiAccess: WebMidi.MIDIAccess) {
-    event.emit(eventKey.onMIDISuccess, midiAccess);
-    midiAccess.inputs.forEach((midiInput) => {
+    midi = midiAccess;
+    event.emit(eventKey.onMIDISuccess, midi);
+    midi.inputs.forEach((midiInput) => {
         console.log('midiInput', midiInput.name, midiInput);
         midiInput.onmidimessage = onMIDIMessage;
     });

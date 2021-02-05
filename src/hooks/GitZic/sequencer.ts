@@ -1,5 +1,6 @@
 import { event, eventKey } from './event';
-import { SequenceData, sequenceData } from './sequence';
+import { midi } from './midi';
+import { getCurrentNotes, isNoteOn, SequenceData, sequenceData } from './sequence';
 import { between } from './utils';
 
 export const MAX_STEPS_PER_BEAT = 8;
@@ -46,4 +47,16 @@ function loop() {
     const newStep = sequenceData.currentStep + STEP;
     sequenceData.currentStep = newStep >= sequenceData.beatCount ? 0 : newStep;
     event.emit(eventKey.onSeqChange, sequenceData);
+    const notes = getCurrentNotes();
+    notes.forEach((note) => {
+        if (isNoteOn(note)) {
+            midi.outputs.forEach((output) => {
+                output.send([0x90, note.midi, note.velocity]);
+            });
+        } else {
+            midi.outputs.forEach((output) => {
+                output.send([0x80, note.midi, 0]);
+            });
+        }
+    });
 }
