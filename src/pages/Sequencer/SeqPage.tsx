@@ -26,7 +26,10 @@ export const SeqPage: React.FC = () => {
         <IonPage>
             <IonContent fullscreen>
                 <div className="container">
-                    <SeqOptions selectedNote={selectedNote} />
+                    <SeqOptions
+                        selectedNote={selectedNote}
+                        setSelectedNote={setSelectedNote}
+                    />
                     <div className="seq">
                         {displayedNotes.map((midi) => (
                             <SeqNote

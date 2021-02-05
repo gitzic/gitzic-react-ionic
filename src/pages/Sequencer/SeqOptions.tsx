@@ -6,12 +6,12 @@ import { evNumVal, evStrVal } from '../../utils/event';
 import {
     Note,
     setBeatCount,
+    setNote,
     setOutputChannel,
     setOutputId,
     setStepsPerBeat,
 } from '../../hooks/GitZic/sequence';
 import { MAX_STEPS_PER_BEAT, STEP_TICK } from '../../hooks/GitZic';
-import { IonToggle } from '@ionic/react';
 
 const listStepsPerbeat = getListStepsPerbeat();
 
@@ -25,9 +25,10 @@ function getListStepsPerbeat(val = MAX_STEPS_PER_BEAT) {
 
 interface Props {
     selectedNote: Note | undefined;
+    setSelectedNote: React.Dispatch<React.SetStateAction<Note | undefined>>;
 }
 
-export const SeqOptions = ({ selectedNote }: Props) => {
+export const SeqOptions = ({ selectedNote, setSelectedNote }: Props) => {
     const {
         midi,
         sequence: { beatCount, stepsPerBeat, outputId, outputChannel },
@@ -72,7 +73,17 @@ export const SeqOptions = ({ selectedNote }: Props) => {
             {selectedNote && (
                 <>
                     Step length:
-                    <select>
+                    <select
+                        value={selectedNote.duration * stepsPerBeat}
+                        onChange={evNumVal((value) => {
+                            const note = {
+                                ...selectedNote,
+                                duration: value / stepsPerBeat,
+                            };
+                            setSelectedNote(note);
+                            setNote(note);
+                        })}
+                    >
                         {[
                             ...new Array(
                                 1 +
@@ -83,7 +94,16 @@ export const SeqOptions = ({ selectedNote }: Props) => {
                             <option key={`step-length-${key}`}>{key}</option>
                         ))}
                     </select>
-                    <input checked={selectedNote.slide} type="checkbox" /> slide
+                    <input
+                        checked={selectedNote.slide}
+                        type="checkbox"
+                        onChange={({ target: { checked: slide } }) => {
+                            const note = { ...selectedNote, slide };
+                            setSelectedNote(note);
+                            setNote(note);
+                        }}
+                    />{' '}
+                    slide
                 </>
             )}
         </div>

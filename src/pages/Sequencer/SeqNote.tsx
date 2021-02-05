@@ -38,7 +38,8 @@ export const SeqNote = ({
                     );
                     const duration = step ? step.duration * stepsPerBeat : 1;
                     const even = Math.floor(key / stepsPerBeat) % 2 === 0;
-                    const time = key * STEP_TICK * (MAX_STEPS_PER_BEAT / stepsPerBeat);
+                    const time =
+                        key * STEP_TICK * (MAX_STEPS_PER_BEAT / stepsPerBeat);
                     return (
                         <div
                             className={`step ${step && 'active'} ${
@@ -50,14 +51,14 @@ export const SeqNote = ({
                             }`}
                             key={`step-${key}`}
                             onClick={() =>
-                                setSelectedNote(
-                                    step || {
+                                setSelectedNote({
+                                    ...(step || {
                                         midi,
                                         duration: 0,
                                         time,
                                         velocity: 100,
-                                    },
-                                )
+                                    }),
+                                })
                             }
                             style={{
                                 width: 30 * duration + 4 * (duration - 1),

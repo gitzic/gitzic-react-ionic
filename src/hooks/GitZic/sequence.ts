@@ -41,7 +41,9 @@ export function setStepsPerBeat(count: number) {
 export function getCurrentNotes() {
     return sequenceData.notes
         .filter((note) => isNoteOn(note) || isNoteOff(note))
-        .sort((_, note) => (isNoteOff(note) && note.slide ? -1 : 1));
+        .sort((_, note) =>
+            isNoteOff(note) && note.slide ? -1 : isNoteOn(note) ? -1 : 1,
+        );
 }
 
 export function isNoteOn({ time }: Note) {
@@ -50,6 +52,27 @@ export function isNoteOn({ time }: Note) {
 
 export function isNoteOff({ time, duration }: Note) {
     return sequenceData.currentStep === time + duration;
+}
+
+export function findIndexNote(note: Note) {
+    return sequenceData.notes.findIndex(
+        ({ time, midi }) => note.time === time && note.midi === midi,
+    );
+}
+
+export function setNote(note: Note) {
+    const index = findIndexNote(note);
+    if (index === -1) {
+        sequenceData.notes.push(note);
+    } else if (!note.duration) {
+        console.log('delete', sequenceData.notes[index]);
+        delete sequenceData.notes[index];
+    } else {
+        sequenceData.notes[index] = note;
+    }
+    console.log('note', note);
+    console.log('sequenceData', sequenceData);
+    event.emit(eventKey.onSeqChange, sequenceData);
 }
 
 export const sequenceData: SequenceData = {
@@ -61,12 +84,12 @@ export const sequenceData: SequenceData = {
     stepsPerBeat: 4,
     displayedNotes: [64, 62, 60, 58, 50],
     notes: [
-        {
-            midi: 60,
-            duration: 0.25,
-            time: 0,
-            velocity: 100,
-        },
+        // {
+        //     midi: 60,
+        //     duration: 0.25,
+        //     time: 0,
+        //     velocity: 100,
+        // },
         {
             midi: 58,
             duration: 0.5,
