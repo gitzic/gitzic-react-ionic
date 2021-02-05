@@ -16,21 +16,24 @@ export const SeqAddDisplayNote = ({ excludeNotes, currentSeq }: Props) => {
         .map((note, midi) => ({ note, midi }))
         .filter(({ midi }) => !excludeNotes.includes(midi));
 
-    const [selMidi, setSelMidi] = React.useState(
-        list[Math.floor(list.length / 2)].midi,
-    );
+    const defaultMidi = list[Math.floor(list.length / 2)].midi;
+
+    const [selMidi, setSelMidi] = React.useState<number>(-1);
 
     return (
         <IonButton
             size="small"
             fill="outline"
             onClick={() => {
-                setDisplayNote(currentSeq)(selMidi);
+                setDisplayNote(currentSeq)(
+                    selMidi === -1 ? defaultMidi : selMidi,
+                );
+                setSelMidi(-1);
             }}
         >
             <IonIcon slot="start" icon={add} />
             Add
-            <select defaultValue={selMidi} onChange={evNumVal(setSelMidi)}>
+            <select value={defaultMidi} onChange={evNumVal(setSelMidi)}>
                 {list.map(({ note, midi }) => (
                     <option key={`note-${midi}`} value={midi}>
                         {note}
