@@ -1,6 +1,6 @@
 import React from 'react';
 import { IonAlert, IonButton } from '@ionic/react';
-import { setName } from '../../hooks/GitZic/sequence';
+import { setName } from '../../hooks/Zic/sequence';
 
 interface Props {
     value: string;

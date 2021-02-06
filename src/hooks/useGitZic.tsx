@@ -1,4 +1,5 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
+import { loadSequences } from './Git';
 import {
     init,
     addListenerMidiSuccess,
@@ -7,8 +8,8 @@ import {
     sequencer,
     addListenerBPMchange,
     addListenerSeqChange,
-} from './GitZic';
-import { sequences as sequencesDefault, SequenceData } from './GitZic/sequence';
+} from './Zic';
+import { sequences as sequencesDefault, SequenceData } from './Zic/sequence';
 
 // inspired by https://github.com/matthewshirley/react-midi-hook
 
@@ -47,6 +48,7 @@ export function GitZicProvider({ children }: React.PropsWithChildren<{}>) {
         addListenerBPMchange(setTempo);
         addListenerSeqChange((seq) => { setSequences([...seq]);  });
         init();
+        loadSequences();
     }, []);
 
     return (

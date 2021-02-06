@@ -104,6 +104,11 @@ export function setDisplayNote(id: number) {
     };
 }
 
+export function setSequences(newSequences: SequenceData[]) {
+    sequences = newSequences;
+    event.emit(eventKey.onSeqChange, sequences);
+}
+
 export function addNew() {
     sequences.push({
         name: new Date().toLocaleString(),
@@ -118,6 +123,6 @@ export function addNew() {
     event.emit(eventKey.onSeqChange, sequences);
 }
 
-export const sequences: SequenceData[] = [];
+export let sequences: SequenceData[] = [];
 
 !sequences.length && addNew();

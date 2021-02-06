@@ -2,8 +2,8 @@ import React from 'react';
 import { IonButton, IonIcon } from '@ionic/react';
 import { add } from 'ionicons/icons';
 
-import { noteMidi } from '../../hooks/GitZic/note';
-import { setDisplayNote } from '../../hooks/GitZic/sequence';
+import { noteMidi } from '../../hooks/Zic/note';
+import { setDisplayNote } from '../../hooks/Zic/sequence';
 import { evNumVal } from '../../utils/event';
 
 interface Props {

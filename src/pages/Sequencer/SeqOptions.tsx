@@ -12,9 +12,10 @@ import {
     setOutputChannel,
     setOutputId,
     setStepsPerBeat,
-} from '../../hooks/GitZic/sequence';
-import { MAX_STEPS_PER_BEAT } from '../../hooks/GitZic';
+} from '../../hooks/Zic/sequence';
+import { MAX_STEPS_PER_BEAT } from '../../hooks/Zic';
 import { SeqEditName } from './SeqEditName';
+import { SeqSave } from './SeqSave';
 
 const listStepsPerbeat = getListStepsPerbeat();
 
@@ -49,6 +50,7 @@ export const SeqOptions = ({
     } = sequences[currentSeq];
     return (
         <div>
+            <SeqSave />
             <select
                 value={currentSeq}
                 onChange={evStrVal((val) => {

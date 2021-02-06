@@ -1,7 +1,7 @@
 import React from 'react';
-import { noteMidi } from '../../hooks/GitZic/note';
-import { Note, setNote } from '../../hooks/GitZic/sequence';
-import { MAX_STEPS_PER_BEAT, STEP_TICK } from '../../hooks/GitZic/sequencer';
+import { noteMidi } from '../../hooks/Zic/note';
+import { Note, setNote } from '../../hooks/Zic/sequence';
+import { MAX_STEPS_PER_BEAT, STEP_TICK } from '../../hooks/Zic/sequencer';
 
 interface Props {
     beatCount: number;

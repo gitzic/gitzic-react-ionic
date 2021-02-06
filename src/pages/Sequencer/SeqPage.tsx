@@ -9,7 +9,7 @@ import { SeqOptions } from './SeqOptions';
 import { SeqNote } from './SeqNote';
 import { SeqAddDisplayNote } from './SeqAddDisplayNote';
 import { SeqTime } from './SeqTime';
-import { Note } from '../../hooks/GitZic/sequence';
+import { Note } from '../../hooks/Zic/sequence';
 
 export const SeqPage: React.FC = () => {
     const { sequences } = useGitZic();
