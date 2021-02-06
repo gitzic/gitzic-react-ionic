@@ -29,7 +29,7 @@ export const sequencer: Sequencer = {
     },
 };
 
-export function initSeqencer() {
+export function initSequencer() {
     setBpm(sequencer.tempo.bpm);
 }
 

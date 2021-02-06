@@ -1,19 +1,13 @@
 import { basename, dirname } from 'path';
 // should we use fetch over axios?
 import axios, { AxiosRequestConfig } from 'axios';
-import Cookies from 'universal-cookie';
 
 import { Storage } from './Storage';
 import { ERR } from '../error';
+import { getGithubRepo, getGithubToken, getGithubUser } from './localStorage';
 
 const BASE_URL = 'https://api.github.com';
 const COMMIT_PREFIX = '[GitZic]';
-
-export enum githubStorageKeys {
-    githubUser = 'githubUser',
-    githubToken = 'githubToken',
-    githubRepo = 'githubRepo',
-}
 
 export class GitHubStorage extends Storage {
     async readdir(path: string) {
@@ -264,17 +258,15 @@ export class GitHubStorage extends Storage {
         return `https://github.com/${this.user}/${this.repo}/actions`;
     }
 
-    protected cookies = new Cookies();
-
     protected get user() {
-        return this.cookies.get(githubStorageKeys.githubUser);
+        return getGithubUser();
     }
 
     protected get token() {
-        return this.cookies.get(githubStorageKeys.githubToken);
+        return getGithubToken();
     }
 
     protected get repo() {
-        return this.cookies.get(githubStorageKeys.githubRepo);
+        return getGithubRepo();
     }
 }

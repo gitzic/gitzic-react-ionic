@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Cookies from 'universal-cookie';
 import {
     IonContent,
     IonHeader,
@@ -14,23 +13,22 @@ import {
 } from '@ionic/react';
 
 import { eye, eyeOutline } from 'ionicons/icons';
-import { Info } from '../../components/Info';
-import { githubStorageKeys } from '../../storage/GitHubStorage';
 import { GithubTokenInfo } from './GithubTokenInfo';
 import { GitHubInfo } from './GitHubInfo';
+import {
+    getGithubRepo,
+    getGithubToken,
+    getGithubUser,
+    storeGithubUser,
+    storeGithubRepo,
+    storeGithubToken,
+} from '../../storage/localStorage';
 
 export const SettingsPage: React.FC = () => {
-    const cookies = new Cookies();
 
-    const [githubUser, setGithubUser] = useState<string>(
-        cookies.get(githubStorageKeys.githubUser),
-    );
-    const [githubRepo, setGithubRepo] = useState<string>(
-        cookies.get(githubStorageKeys.githubRepo),
-    );
-    const [githubToken, setGithubToken] = useState<string>(
-        cookies.get(githubStorageKeys.githubToken),
-    );
+    const [githubUser, setGithubUser] = useState<string>(getGithubUser());
+    const [githubRepo, setGithubRepo] = useState<string>(getGithubRepo());
+    const [githubToken, setGithubToken] = useState<string>(getGithubToken());
     const [showToken, setShowToken] = useState(false);
 
     return (
@@ -50,11 +48,7 @@ export const SettingsPage: React.FC = () => {
                             onIonChange={(e) => {
                                 const user = e.detail.value!;
                                 setGithubUser(user);
-                                cookies.set(
-                                    githubStorageKeys.githubUser,
-                                    user,
-                                    { path: '/' },
-                                );
+                                storeGithubUser(user);
                             }}
                             clearInput
                         ></IonInput>
@@ -67,11 +61,7 @@ export const SettingsPage: React.FC = () => {
                             onIonChange={(e) => {
                                 const repo = e.detail.value!;
                                 setGithubRepo(repo);
-                                cookies.set(
-                                    githubStorageKeys.githubRepo,
-                                    repo,
-                                    { path: '/' },
-                                );
+                                storeGithubRepo(repo);
                             }}
                             clearInput
                         ></IonInput>
@@ -85,11 +75,7 @@ export const SettingsPage: React.FC = () => {
                             onIonChange={(e) => {
                                 const token = e.detail.value!;
                                 setGithubToken(token);
-                                cookies.set(
-                                    githubStorageKeys.githubToken,
-                                    token,
-                                    { path: '/' },
-                                );
+                                storeGithubToken(token);
                             }}
                             clearInput
                         ></IonInput>

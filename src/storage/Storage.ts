@@ -3,7 +3,7 @@ export abstract class Storage {
     abstract image(path: string): Promise<Buffer | string | undefined>;
     abstract blob(path: string): Promise<Buffer | undefined>;
     abstract repos(): Promise<string[] | undefined>;
-    abstract getRepo(): Promise<string | undefined>;
+    abstract getRepo(): Promise<string | null>;
     abstract read(path: string): Promise<Buffer>;
     abstract readJSON(path: string): Promise<any>;
     abstract readdir(path: string): Promise<string[]>;
