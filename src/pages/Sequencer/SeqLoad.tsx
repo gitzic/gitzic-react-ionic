@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonButton, IonIcon } from '@ionic/react';
+import { IonButton, IonIcon, IonSpinner } from '@ionic/react';
 import { loadSequences } from '../../hooks/Git';
 import { reloadCircleOutline } from 'ionicons/icons';
 
@@ -22,8 +22,11 @@ export const SeqLoad = () => {
                     setLoading(false);
                 }}
             >
-                <IonIcon icon={reloadCircleOutline} />
-                {loading && 'Loading'}
+                {loading ? (
+                    <IonSpinner name="dots" />
+                ) : (
+                    <IonIcon icon={reloadCircleOutline} />
+                )}
             </IonButton>
         </>
     );

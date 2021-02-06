@@ -111,7 +111,14 @@ export function setSequences(newSequences: SequenceData[]) {
 
 export function addNew() {
     sequences.push({
-        name: new Date().toLocaleString(),
+        name: new Date().toLocaleString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+            year: '2-digit',
+            month: '2-digit',
+            day: '2-digit',
+        }),
         outputId: '',
         outputChannel: 0,
         currentStep: 0,

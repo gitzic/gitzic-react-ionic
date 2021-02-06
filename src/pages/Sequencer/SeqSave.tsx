@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonButton, IonIcon } from '@ionic/react';
+import { IonButton, IonIcon, IonSpinner } from '@ionic/react';
 import { saveSequences } from '../../hooks/Git';
 import { saveOutline } from 'ionicons/icons';
 
@@ -22,8 +22,11 @@ export const SeqSave = () => {
                     setSaving(false);
                 }}
             >
-                <IonIcon icon={saveOutline} />
-                {saving && 'Saving'}
+                {saving ? (
+                    <IonSpinner name="dots" />
+                ) : (
+                    <IonIcon icon={saveOutline} />
+                )}
             </IonButton>
         </>
     );

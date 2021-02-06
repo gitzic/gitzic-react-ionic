@@ -10,7 +10,7 @@ import {
     IonTabs,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { settingsOutline, musicalNotes } from 'ionicons/icons';
+import { settingsOutline, musicalNotes, playOutline } from 'ionicons/icons';
 import { SeqPage } from './pages/Sequencer/SeqPage';
 import { SettingsPage } from './pages/Settings/SettingsPage';
 
@@ -36,6 +36,7 @@ import './theme/variables.css';
 import './App.css';
 
 import { GitZicProvider, useGitZic } from './hooks/useGitZic';
+import { PlayerPage } from './pages/Player/PlayerPage';
 
 const App: React.FC = () => {
     const { midi } = useGitZic();
@@ -46,15 +47,32 @@ const App: React.FC = () => {
                 <IonReactRouter>
                     <IonTabs>
                         <IonRouterOutlet>
-                            <Route path="/sequencer" component={SeqPage} exact={true} />
-                            <Route path="/settings" component={SettingsPage} exact={true} />
+                            <Route
+                                path="/player"
+                                component={PlayerPage}
+                                exact={true}
+                            />
+                            <Route
+                                path="/sequencer"
+                                component={SeqPage}
+                                exact={true}
+                            />
+                            <Route
+                                path="/settings"
+                                component={SettingsPage}
+                                exact={true}
+                            />
                             <Route
                                 path="/"
-                                render={() => <Redirect to="/sequencer" />}
+                                render={() => <Redirect to="/player" />}
                                 exact={true}
                             />
                         </IonRouterOutlet>
                         <IonTabBar slot="bottom">
+                            <IonTabButton tab="player" href="/player">
+                                <IonIcon icon={playOutline} />
+                                <IonLabel>Player</IonLabel>
+                            </IonTabButton>
                             <IonTabButton tab="sequencer" href="/sequencer">
                                 <IonIcon icon={musicalNotes} />
                                 <IonLabel>Sequencer</IonLabel>
