@@ -1,31 +1,37 @@
-export const localStorage = window.localStorage;
-
-export enum githubStorageKeys {
+enum githubStorageKeys {
     githubUser = 'githubUser',
     githubToken = 'githubToken',
     githubRepo = 'githubRepo',
 }
 
+function store(key: string, value: string) {
+    window.localStorage.setItem(key, value);
+}
+
+function get(key: string) {
+    return window.localStorage.getItem(key);
+}
+
 export function getGithubUser() {
-    return localStorage.getItem(githubStorageKeys.githubUser) || '';
+    return get(githubStorageKeys.githubUser) || '';
 }
 
 export function getGithubRepo() {
-    return localStorage.getItem(githubStorageKeys.githubRepo) || '';
+    return get(githubStorageKeys.githubRepo) || '';
 }
 
 export function getGithubToken() {
-    return localStorage.getItem(githubStorageKeys.githubToken) || '';
+    return get(githubStorageKeys.githubToken) || '';
 }
 
 export function storeGithubUser(val: string) {
-    return localStorage.setItem(githubStorageKeys.githubUser, val);
+    store(githubStorageKeys.githubUser, val);
 }
 
 export function storeGithubRepo(val: string) {
-    return localStorage.setItem(githubStorageKeys.githubRepo, val);
+    store(githubStorageKeys.githubRepo, val);
 }
 
 export function storeGithubToken(val: string) {
-    return localStorage.setItem(githubStorageKeys.githubToken, val);
+    store(githubStorageKeys.githubToken, val);
 }
