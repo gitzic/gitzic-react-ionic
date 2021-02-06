@@ -21,18 +21,7 @@ export const SeqAddDisplayNote = ({ excludeNotes, currentSeq }: Props) => {
     const [selMidi, setSelMidi] = React.useState<number>(-1);
 
     return (
-        <IonButton
-            size="small"
-            fill="outline"
-            onClick={() => {
-                setDisplayNote(currentSeq)(
-                    selMidi === -1 ? defaultMidi : selMidi,
-                );
-                setSelMidi(-1);
-            }}
-        >
-            <IonIcon slot="start" icon={add} />
-            Add
+        <>
             <select value={defaultMidi} onChange={evNumVal(setSelMidi)}>
                 {list.map(({ note, midi }) => (
                     <option key={`note-${midi}`} value={midi}>
@@ -40,6 +29,19 @@ export const SeqAddDisplayNote = ({ excludeNotes, currentSeq }: Props) => {
                     </option>
                 ))}
             </select>
-        </IonButton>
+            <IonButton
+                size="small"
+                fill="outline"
+                onClick={() => {
+                    setDisplayNote(currentSeq)(
+                        selMidi === -1 ? defaultMidi : selMidi,
+                    );
+                    setSelMidi(-1);
+                }}
+            >
+                <IonIcon slot="start" icon={add} />
+                Add {selMidi > -1 ? noteMidi[selMidi] : noteMidi[defaultMidi]}
+            </IonButton>
+        </>
     );
 };
