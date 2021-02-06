@@ -86,7 +86,10 @@ export const SeqOptions = ({
                 ))}
             </select>
             steps. Output:
-            <select value={outputId} onChange={evStrVal(setOutputId(currentSeq))}>
+            <select
+                value={outputId}
+                onChange={evStrVal(setOutputId(currentSeq))}
+            >
                 <option value="">None</option>
                 {Array.from(midi?.outputs.values() || []).map(
                     ({ id, name }) => (
@@ -130,43 +133,47 @@ export const SeqOptions = ({
                             <option key={`step-length-${key}`}>{key}</option>
                         ))}
                     </select>
-                    <IonButton
-                        size="small"
-                        style={{
-                            height: 20,
-                            marginTop: -8,
-                            padding: 0,
-                        }}
-                        color={selectedNote.slide ? 'danger' : 'light'}
-                        onClick={() => {
-                            const note = {
-                                ...selectedNote,
-                                slide: !selectedNote.slide,
-                            };
-                            setSelectedNote(note);
-                            setNote(currentSeq)(note);
-                        }}
-                    >
-                        Slide
-                    </IonButton>{' '}
-                    velocity:
-                    <select
-                        value={selectedNote.velocity}
-                        onChange={evNumVal((velocity) => {
-                            const note = {
-                                ...selectedNote,
-                                velocity,
-                            };
-                            setSelectedNote(note);
-                            setNote(currentSeq)(note);
-                        })}
-                    >
-                        {[...new Array(127)].map((_, key) => (
-                            <option key={`step-velocity-${key}`}>
-                                {key + 1}
-                            </option>
-                        ))}
-                    </select>
+                    {selectedNote.duration > 0 && (
+                        <>
+                            <IonButton
+                                size="small"
+                                style={{
+                                    height: 20,
+                                    marginTop: -8,
+                                    padding: 0,
+                                }}
+                                color={selectedNote.slide ? 'danger' : 'light'}
+                                onClick={() => {
+                                    const note = {
+                                        ...selectedNote,
+                                        slide: !selectedNote.slide,
+                                    };
+                                    setSelectedNote(note);
+                                    setNote(currentSeq)(note);
+                                }}
+                            >
+                                Slide
+                            </IonButton>{' '}
+                            velocity:
+                            <select
+                                value={selectedNote.velocity}
+                                onChange={evNumVal((velocity) => {
+                                    const note = {
+                                        ...selectedNote,
+                                        velocity,
+                                    };
+                                    setSelectedNote(note);
+                                    setNote(currentSeq)(note);
+                                })}
+                            >
+                                {[...new Array(127)].map((_, key) => (
+                                    <option key={`step-velocity-${key}`}>
+                                        {key + 1}
+                                    </option>
+                                ))}
+                            </select>
+                        </>
+                    )}
                 </>
             )}
         </div>

@@ -58,7 +58,7 @@ export const SeqNote = ({
                                     midi,
                                     duration: seqStepTick,
                                     time,
-                                    velocity: 100,
+                                    velocity: 90,
                                 };
                                 setSelectedNote({ ...note });
                                 setNote(currentSeq)(note);

@@ -16,7 +16,7 @@
 }
 
 .seq .note-name {
-    position: fixed;
+    position: absolute;
     background-color: #fff;
     margin-top: 2px;
     padding-top: 5px;
