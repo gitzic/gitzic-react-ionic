@@ -82,7 +82,7 @@ export function setNote(id: number) {
             sequences[id].notes.push(note);
         } else if (!note.duration) {
             // console.log('delete', sequences[id].notes[index]);
-            delete sequences[id].notes[index];
+            sequences[id].notes.splice(index, 1);
         } else {
             sequences[id].notes[index] = note;
         }
@@ -96,6 +96,7 @@ export function setNote(id: number) {
 export function setDisplayNote(id: number) {
     return (midi: number) => {
         sequences[id].displayedNotes.push(midi);
+        sequences[id].displayedNotes.sort();
     };
 }
 
