@@ -15,18 +15,21 @@ import {
 
 import { eye, eyeOutline } from 'ionicons/icons';
 import { Info } from '../../components/Info';
+import { githubStorageKeys } from '../../storage/GitHubStorage';
+import { GithubTokenInfo } from './GithubTokenInfo';
+import { GitHubInfo } from './GitHubInfo';
 
 export const SettingsPage: React.FC = () => {
     const cookies = new Cookies();
 
     const [githubUser, setGithubUser] = useState<string>(
-        cookies.get('githubUser'),
+        cookies.get(githubStorageKeys.githubUser),
     );
     const [githubRepo, setGithubRepo] = useState<string>(
-        cookies.get('githubRepo'),
+        cookies.get(githubStorageKeys.githubRepo),
     );
     const [githubToken, setGithubToken] = useState<string>(
-        cookies.get('githubToken'),
+        cookies.get(githubStorageKeys.githubToken),
     );
     const [showToken, setShowToken] = useState(false);
 
@@ -47,7 +50,11 @@ export const SettingsPage: React.FC = () => {
                             onIonChange={(e) => {
                                 const user = e.detail.value!;
                                 setGithubUser(user);
-                                cookies.set('githubUser', user, { path: '/' });
+                                cookies.set(
+                                    githubStorageKeys.githubUser,
+                                    user,
+                                    { path: '/' },
+                                );
                             }}
                             clearInput
                         ></IonInput>
@@ -60,7 +67,11 @@ export const SettingsPage: React.FC = () => {
                             onIonChange={(e) => {
                                 const repo = e.detail.value!;
                                 setGithubRepo(repo);
-                                cookies.set('githubRepo', repo, { path: '/' });
+                                cookies.set(
+                                    githubStorageKeys.githubRepo,
+                                    repo,
+                                    { path: '/' },
+                                );
                             }}
                             clearInput
                         ></IonInput>
@@ -74,7 +85,11 @@ export const SettingsPage: React.FC = () => {
                             onIonChange={(e) => {
                                 const token = e.detail.value!;
                                 setGithubToken(token);
-                                cookies.set('githubToken', token, { path: '/' });
+                                cookies.set(
+                                    githubStorageKeys.githubToken,
+                                    token,
+                                    { path: '/' },
+                                );
                             }}
                             clearInput
                         ></IonInput>
@@ -83,38 +98,8 @@ export const SettingsPage: React.FC = () => {
                             onClick={() => setShowToken(!showToken)}
                         />
                     </IonItem>
-                    <Info>
-                        <p>
-                            To save data in your GitHub repository, we need to
-                            provide a{' '}
-                            <a
-                                href="https://developer.github.com/v3/auth/#via-oauth-and-personal-access-tokens"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                personal access tokens
-                            </a>{' '}
-                            to the{' '}
-                            <a
-                                href="https://developer.github.com/v3/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                GitHub API
-                            </a>
-                            . To{' '}
-                            <a
-                                href="https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                create a token
-                            </a>
-                            , go in developer settings, personal access tokens
-                            and then generate new token. In most of the case you
-                            will only need to give permission for public_repo.
-                        </p>
-                    </Info>
+                    <GithubTokenInfo />
+                    {githubUser && githubToken && githubRepo && <GitHubInfo />}
                 </IonList>
             </IonContent>
         </IonPage>
