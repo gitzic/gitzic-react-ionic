@@ -10,9 +10,9 @@ import {
     IonTabs,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { bugOutline, musicalNotes } from 'ionicons/icons';
+import { settingsOutline, musicalNotes } from 'ionicons/icons';
 import { SeqPage } from './pages/Sequencer/SeqPage';
-import Tab2 from './pages/Tab2';
+import { SettingsPage } from './pages/Settings/SettingsPage';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -47,7 +47,7 @@ const App: React.FC = () => {
                     <IonTabs>
                         <IonRouterOutlet>
                             <Route path="/sequencer" component={SeqPage} exact={true} />
-                            <Route path="/log" component={Tab2} exact={true} />
+                            <Route path="/settings" component={SettingsPage} exact={true} />
                             <Route
                                 path="/"
                                 render={() => <Redirect to="/sequencer" />}
@@ -59,9 +59,9 @@ const App: React.FC = () => {
                                 <IonIcon icon={musicalNotes} />
                                 <IonLabel>Sequencer</IonLabel>
                             </IonTabButton>
-                            <IonTabButton tab="log" href="/log">
-                                <IonIcon icon={bugOutline} />
-                                <IonLabel>Log</IonLabel>
+                            <IonTabButton tab="settings" href="/settings">
+                                <IonIcon icon={settingsOutline} />
+                                <IonLabel>Settings</IonLabel>
                             </IonTabButton>
                         </IonTabBar>
                     </IonTabs>
