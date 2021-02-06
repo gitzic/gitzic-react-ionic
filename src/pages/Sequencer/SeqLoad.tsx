@@ -1,10 +1,10 @@
 import React from 'react';
 import { IonButton, IonIcon } from '@ionic/react';
-import { saveSequences } from '../../hooks/Git';
-import { saveOutline } from 'ionicons/icons';
+import { loadSequences } from '../../hooks/Git';
+import { reloadCircleOutline } from 'ionicons/icons';
 
-export const SeqSave = () => {
-    const [saving, setSaving] = React.useState(false);
+export const SeqLoad = () => {
+    const [loading, setLoading] = React.useState(false);
     return (
         <>
             <IonButton
@@ -17,13 +17,13 @@ export const SeqSave = () => {
                     padding: 0,
                 }}
                 onClick={async () => {
-                    setSaving(true);
-                    await saveSequences();
-                    setSaving(false);
+                    setLoading(true);
+                    await loadSequences();
+                    setLoading(false);
                 }}
             >
-                <IonIcon icon={saveOutline} />
-                {saving && 'Saving'}
+                <IonIcon icon={reloadCircleOutline} />
+                {loading && 'Loading'}
             </IonButton>
         </>
     );

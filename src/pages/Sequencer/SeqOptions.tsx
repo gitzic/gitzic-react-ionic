@@ -16,6 +16,7 @@ import {
 import { MAX_STEPS_PER_BEAT } from '../../hooks/Zic';
 import { SeqEditName } from './SeqEditName';
 import { SeqSave } from './SeqSave';
+import { SeqLoad } from './SeqLoad';
 
 const listStepsPerbeat = getListStepsPerbeat();
 
@@ -50,6 +51,7 @@ export const SeqOptions = ({
     } = sequences[currentSeq];
     return (
         <div>
+            <SeqLoad />
             <SeqSave />
             <select
                 value={currentSeq}

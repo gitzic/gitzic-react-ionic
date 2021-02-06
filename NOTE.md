@@ -4,6 +4,9 @@
     - maybe all setting should be in a separate window
     - being able to delete seq
 
+- sometime note are not off because reload data before
+    - try to always noteOff
+
 ## Todo
 
 - save sequence in git
