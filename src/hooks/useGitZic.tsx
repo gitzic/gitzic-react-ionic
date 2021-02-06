@@ -8,6 +8,9 @@ import {
     sequencer,
     addListenerBPMchange,
     addListenerSeqChange,
+    addListenerTrackschange,
+    Track,
+    defaultTracks,
 } from './Zic';
 import { sequences as sequencesDefault, SequenceData } from './Zic/sequence';
 
@@ -18,10 +21,12 @@ interface Context {
     error?: any;
     sequences: SequenceData[];
     tempo: Tempo;
+    tracks: Track[];
 }
 
 export const GitZicContext = createContext<Context>({
     sequences: sequencesDefault,
+    tracks: defaultTracks,
     tempo: sequencer.tempo,
 });
 
@@ -33,12 +38,16 @@ export function GitZicProvider({ children }: React.PropsWithChildren<{}>) {
     const [midi, setMidi] = useState<WebMidi.MIDIAccess>();
     const [error, setError] = useState<any>(false);
     const [tempo, setTempo] = useState<Tempo>(sequencer.tempo);
-    const [sequences, setSequences] = useState<SequenceData[]>(sequencesDefault);
+    const [sequences, setSequences] = useState<SequenceData[]>(
+        sequencesDefault,
+    );
+    const [tracks, setTracks] = useState<Track[]>(defaultTracks);
 
     const provided = {
         midi,
         error,
         tempo,
+        tracks,
         sequences,
     };
 
@@ -46,7 +55,12 @@ export function GitZicProvider({ children }: React.PropsWithChildren<{}>) {
         addListenerMidiSuccess(setMidi);
         addListenerMidiError(setError);
         addListenerBPMchange(setTempo);
-        addListenerSeqChange((seq) => { setSequences([...seq]);  });
+        addListenerSeqChange((seq) => {
+            setSequences([...seq]);
+        });
+        addListenerTrackschange((newTracks) => {
+            setTracks([...newTracks]);
+        });
         init();
         loadSequences();
     }, []);
