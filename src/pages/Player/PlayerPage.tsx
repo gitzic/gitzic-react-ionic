@@ -6,6 +6,7 @@ import {
     IonCardSubtitle,
     IonContent,
     IonPage,
+    IonProgressBar,
 } from '@ionic/react';
 import { useGitZic } from '../../hooks/useGitZic';
 import { getSequenceInTrack, toggleSequence } from '../../hooks/Zic';
@@ -26,29 +27,33 @@ export const PlayerPage: React.FC = () => {
     return (
         <IonPage>
             <IonContent>
-                {sequences.map(({ name, beatCount, stepsPerBeat }, key) => (
-                    <IonCard
-                        style={{
-                            width,
-                            float: 'left',
-                            cursor: 'pointer',
-                        }}
-                        className={`${getSequenceInTrack(0, key) !== -1 && 'active'}`}
-                        key={`play-${key}`}
-                        onClick={() => {
-                            toggleSequence(0, key);
-                        }}
-                    >
-                        <IonCardHeader>
-                            <IonCardSubtitle>{name}</IonCardSubtitle>
-                        </IonCardHeader>
+                {sequences.map(
+                    ({ name, beatCount, stepsPerBeat, currentStep }, key) => (
+                        <IonCard
+                            style={{
+                                width,
+                                float: 'left',
+                                cursor: 'pointer',
+                            }}
+                            className={`${
+                                getSequenceInTrack(0, key) !== -1 && 'active'
+                            }`}
+                            key={`play-${key}`}
+                            onClick={() => {
+                                toggleSequence(0, key);
+                            }}
+                        >
+                            <IonCardHeader>
+                                <IonCardSubtitle>{name}</IonCardSubtitle>
+                            </IonCardHeader>
 
-                        <IonCardContent>
-                            <b>{beatCount * stepsPerBeat}</b> steps /{' '}
-                            {beatCount} beats
-                        </IonCardContent>
-                    </IonCard>
-                ))}
+                            <IonCardContent>
+                                <b>{beatCount * stepsPerBeat}</b> steps /{' '}
+                                {beatCount} beats
+                            </IonCardContent>
+                        </IonCard>
+                    ),
+                )}
             </IonContent>
         </IonPage>
     );

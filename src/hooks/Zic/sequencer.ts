@@ -72,10 +72,10 @@ export function addListenerSeqChange(fn: (seq: SequenceData[]) => void) {
 
 function loop() {
     sequences.forEach((sequence, id) => {
+        const newStep = sequence.currentStep + STEP_TICK;
+        sequence.currentStep = newStep >= sequence.beatCount ? 0 : newStep;
+        event.emit(eventKey.onSeqChange, sequences);
         if (tracks[activeTrack].sequences.includes(id)) {
-            const newStep = sequence.currentStep + STEP_TICK;
-            sequence.currentStep = newStep >= sequence.beatCount ? 0 : newStep;
-            event.emit(eventKey.onSeqChange, sequences);
             const notes = getCurrentNotes(id);
             // console.log('notes', notes);
             notes.forEach((note) => {
