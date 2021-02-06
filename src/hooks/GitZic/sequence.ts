@@ -30,7 +30,11 @@ export function isNoteOn(id: number, { time }: Note) {
 }
 
 export function isNoteOff(id: number, { time, duration }: Note) {
-    return sequences[id].currentStep === time + duration;
+    return (
+        time + duration === sequences[id].currentStep ||
+        (sequences[id].currentStep === 0 &&
+            time + duration === sequences[id].beatCount)
+    );
 }
 
 export function findIndexNote(id: number, note: Note) {
@@ -102,7 +106,7 @@ export function setDisplayNote(id: number) {
 
 export function addNew() {
     sequences.push({
-        name: (new Date()).toLocaleString(),
+        name: new Date().toLocaleString(),
         outputId: '',
         outputChannel: 0,
         currentStep: 0,

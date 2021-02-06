@@ -1,6 +1,5 @@
 ## Fix
 
-- last step note working
 - pompt edit name doesnt work properly on mobile
     - maybe all setting should be in a separate window
 
